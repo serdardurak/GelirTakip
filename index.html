@@ -242,9 +242,41 @@ select option{background:#1a1829;}
       <div style="font-size:11px;color:var(--muted);margin-top:3px" id="predSub"></div>
     </div>
     <div class="insight" id="insightCard" style="display:none"><div class="insight-icon" id="insightIcon">💡</div><div class="insight-text" id="insightText"></div></div>
+    <!-- Son İşlemler Butonu -->
+    <button onclick="goPage('islemler')" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">📋</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--text)">Son İşlemler</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:1px" id="listCountBtn">Tüm giderleri görüntüle</div>
+        </div>
+      </div>
+      <span style="color:var(--muted);font-size:18px">›</span>
+    </button>
+  </div>
+</div>
+
+<!-- ══ İŞLEMLER ══ -->
+<div class="page" id="pageIslemler">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div style="display:flex;align-items:center;gap:10px">
+        <button onclick="goPage('ozet')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:6px 10px;color:var(--text);font-size:14px;cursor:pointer">‹</button>
+        <div class="page-title">Son<br><span>İşlemler</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="list-count" id="listCount">0 kayıt</div>
+        <button class="sort-btn desc" id="sortBtn" onclick="toggleSort()">Tarih</button>
+      </div>
+    </div>
+  </div>
+  <div class="page-inner">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="İşlem ara…" oninput="onSearch()"/>
+      <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+    </div>
     <div class="cat-strip" id="catStrip"></div>
-    <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="searchInput" placeholder="Gider ara…" oninput="onSearch()"/><button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button></div>
-    <div class="list-header"><div class="list-header-title">Son İşlemler</div><div class="list-header-right"><div class="list-count" id="listCount">0 kayıt</div><button class="sort-btn desc" id="sortBtn" onclick="toggleSort()">Tarih</button></div></div>
     <div id="expList"></div>
   </div>
 </div>
@@ -313,19 +345,115 @@ select option{background:#1a1829;}
 </div>
 <!-- AYARLAR -->
 <div class="page" id="pageAyarlar">
-  <div class="topbar"><div class="topbar-row"><div class="page-title">Ayarlar &<br><span>Araçlar</span></div></div></div>
+  <div class="topbar"><div class="topbar-row"><div class="page-title">Ayarlar</div></div></div>
   <div class="page-inner">
-    <div class="settings-section"><div class="settings-section-title">🎯 Tasarruf Hedefleri</div><div id="goalList"></div><button class="btn-ghost" style="width:100%;padding:11px;margin-top:4px" onclick="openGoalModal()">+ Hedef Ekle</button></div>
-    <div class="settings-section"><div class="settings-section-title">💳 Borç & Alacak</div><div id="debtList"></div><button class="btn-ghost" style="width:100%;padding:11px;margin-top:4px" onclick="openDebtModal()">+ Borç/Alacak Ekle</button></div>
-    <div class="settings-section"><div class="settings-section-title">🔄 Tekrarlayan Giderler</div><div id="recurList"></div><button class="btn-ghost" style="width:100%;padding:11px;margin-top:4px" onclick="openRecurModal()">+ Tekrarlayan Ekle</button></div>
-    <div class="settings-section"><div class="settings-section-title">📊 Kategori Bütçe Limitleri</div><div id="catBudgetList"></div><button class="btn-ghost" style="width:100%;padding:11px;margin-top:4px" onclick="openCatBudgetModal()">+ Kategori Limiti Ekle</button></div>
-    <div class="settings-section"><div class="settings-section-title">📅 Haftanın Günleri Analizi</div><div id="dayOfWeekChart"></div></div>
-    <div class="settings-section" style="display:none"><div class="settings-section-title">🔒 Güvenlik</div>
-      <div class="settings-row" onclick="openCredModal()"><div class="settings-row-icon" style="background:rgba(245,166,35,0.1)">🔐</div><div class="settings-row-meta"><div class="settings-row-title">Kullanıcı Adı / Şifre Değiştir</div><div class="settings-row-sub" id="credSettingSub">Giriş bilgilerinizi güncelleyin</div></div><div class="settings-row-right">›</div></div>
-      <div class="settings-row" onclick="doLogout()" style="cursor:pointer"><div class="settings-row-icon" style="background:rgba(224,92,122,0.1)">🚪</div><div class="settings-row-meta"><div class="settings-row-title" style="color:#e05c7a">Çıkış Yap</div><div class="settings-row-sub">Oturumu kapat</div></div><div class="settings-row-right">›</div></div>
+
+    <!-- SEKMELİ YAPI -->
+    <div class="tab-row" id="settingsTabRow" style="margin-bottom:16px">
+      <button class="tab-btn active" onclick="setSettingsTab('planlama')">📋 Planlama</button>
+      <button class="tab-btn" onclick="setSettingsTab('guvenlik')">🔒 Güvenlik</button>
+      <button class="tab-btn" onclick="setSettingsTab('veri')">📤 Veri</button>
     </div>
-    <div class="settings-section"><div class="settings-section-title">📤 Dışa Aktar</div><button class="export-btn" onclick="exportCSV()">📥 Bu ayı CSV indir</button><button class="export-btn" onclick="exportAllCSV()">📦 Tüm verileri indir</button><button class="export-btn" onclick="goPage('rapor');setTimeout(()=>window.print(),300)">🖨️ PDF Rapor Al</button></div>
-    <div style="text-align:center;padding:16px 0 4px"><div style="font-size:12px;color:var(--muted2)">Kişisel Gider Takip</div></div>
+
+    <!-- PLANLAMA SEKMESİ -->
+    <div id="sTab-planlama">
+      <!-- Bütçe & Limitler -->
+      <div class="ay-card" style="border-radius:16px;background:var(--card);border:1px solid var(--border);margin-bottom:10px;overflow:hidden">
+        <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:14px;font-weight:600;color:var(--text)">📊 Kategori Limitleri</div>
+          <button class="btn-ghost" style="padding:5px 11px;font-size:12px" onclick="openCatBudgetModal()">+ Ekle</button>
+        </div>
+        <div id="catBudgetList" style="padding:10px 16px"></div>
+      </div>
+      <!-- Tekrarlayan -->
+      <div class="ay-card" style="border-radius:16px;background:var(--card);border:1px solid var(--border);margin-bottom:10px;overflow:hidden">
+        <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:14px;font-weight:600;color:var(--text)">🔄 Tekrarlayan Giderler</div>
+          <button class="btn-ghost" style="padding:5px 11px;font-size:12px" onclick="openRecurModal()">+ Ekle</button>
+        </div>
+        <div id="recurList" style="padding:10px 16px"></div>
+      </div>
+      <!-- Tasarruf -->
+      <div class="ay-card" style="border-radius:16px;background:var(--card);border:1px solid var(--border);margin-bottom:10px;overflow:hidden">
+        <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:14px;font-weight:600;color:var(--text)">🎯 Tasarruf Hedefleri</div>
+          <button class="btn-ghost" style="padding:5px 11px;font-size:12px" onclick="openGoalModal()">+ Ekle</button>
+        </div>
+        <div id="goalList" style="padding:10px 16px"></div>
+      </div>
+      <!-- Borç -->
+      <div class="ay-card" style="border-radius:16px;background:var(--card);border:1px solid var(--border);margin-bottom:10px;overflow:hidden">
+        <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:14px;font-weight:600;color:var(--text)">💳 Borç & Alacak</div>
+          <button class="btn-ghost" style="padding:5px 11px;font-size:12px" onclick="openDebtModal()">+ Ekle</button>
+        </div>
+        <div id="debtList" style="padding:10px 16px"></div>
+      </div>
+      <!-- Haftanın günleri -->
+      <div class="ay-card" style="border-radius:16px;background:var(--card);border:1px solid var(--border);margin-bottom:10px;overflow:hidden">
+        <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05)">
+          <div style="font-size:14px;font-weight:600;color:var(--text)">📅 Günlere Göre Harcama</div>
+        </div>
+        <div id="dayOfWeekChart" style="padding:10px 16px"></div>
+      </div>
+    </div>
+
+    <!-- GÜVENLİK SEKMESİ -->
+    <div id="sTab-guvenlik" style="display:none">
+      <div style="border-radius:16px;background:var(--card);border:1px solid var(--border);overflow:hidden;margin-bottom:10px">
+        <div onclick="openCredModal()" style="display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.05)">
+          <div style="width:40px;height:40px;border-radius:11px;background:rgba(245,166,35,0.1);display:flex;align-items:center;justify-content:center;font-size:18px">🔐</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:500;color:var(--text)">Şifre Değiştir</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px" id="credSettingSub">Kullanıcı adı ve şifrenizi güncelleyin</div>
+          </div>
+          <div style="color:var(--muted)">›</div>
+        </div>
+        <div onclick="doLogout()" style="display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer">
+          <div style="width:40px;height:40px;border-radius:11px;background:rgba(224,92,122,0.1);display:flex;align-items:center;justify-content:center;font-size:18px">🚪</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:500;color:#e05c7a">Çıkış Yap</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">Oturumu kapat</div>
+          </div>
+          <div style="color:var(--muted)">›</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERİ SEKMESİ -->
+    <div id="sTab-veri" style="display:none">
+      <div style="border-radius:16px;background:var(--card);border:1px solid var(--border);overflow:hidden;margin-bottom:10px">
+        <div onclick="exportCSV()" style="display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.05)">
+          <div style="width:40px;height:40px;border-radius:11px;background:rgba(74,144,217,0.1);display:flex;align-items:center;justify-content:center;font-size:18px">📥</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:500;color:var(--text)">Bu Ayı İndir</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">CSV formatında</div>
+          </div>
+          <div style="color:var(--muted)">›</div>
+        </div>
+        <div onclick="exportAllCSV()" style="display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.05)">
+          <div style="width:40px;height:40px;border-radius:11px;background:rgba(74,144,217,0.1);display:flex;align-items:center;justify-content:center;font-size:18px">📦</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:500;color:var(--text)">Tüm Verileri İndir</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">Tüm geçmiş CSV</div>
+          </div>
+          <div style="color:var(--muted)">›</div>
+        </div>
+        <div onclick="goPage('rapor');setTimeout(()=>window.print(),300)" style="display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer">
+          <div style="width:40px;height:40px;border-radius:11px;background:rgba(74,144,217,0.1);display:flex;align-items:center;justify-content:center;font-size:18px">🖨️</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:500;color:var(--text)">PDF Rapor</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">Yazdır veya PDF olarak kaydet</div>
+          </div>
+          <div style="color:var(--muted)">›</div>
+        </div>
+      </div>
+      <div style="text-align:center;padding:20px 0 4px">
+        <div style="font-size:11px;color:var(--muted2)">Kişisel Gider Takip</div>
+        <div style="font-size:10px;color:var(--muted2);margin-top:3px">Veriler Supabase'de güvenle saklanıyor</div>
+      </div>
+    </div>
+
   </div>
 </div>
 <!-- NAV -->
@@ -798,13 +926,21 @@ async function startApp(){
   checkRecur();
 }
 function init(){
-  // ŞİFRELİ GİRİŞ GEÇİCİ OLARAK İPTAL EDİLDİ — daha sonra geliştirilecek
-  // Eski davranış: checkLogin();
-  document.getElementById('pageLogin').classList.remove('active');
-  startApp();
+  checkLogin();
 }
 // NAV
-function goPage(p){curPage=p;document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));document.getElementById('page'+p.charAt(0).toUpperCase()+p.slice(1)).classList.add('active');document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));const nb=document.getElementById('nav-'+p);if(nb)nb.classList.add('active');if(p==='rapor')setTimeout(renderRapor,50);else if(p==='gelir')renderGelir();else if(p==='ayarlar'){renderGoals();renderDebts();renderRecurs();renderCatBudgets();renderDayOfWeek();}else if(p==='yatirim'){renderInvestments();if(!pricesLoaded)fetchLivePrices();}else render();}
+function setSettingsTab(tab){
+  ['planlama','guvenlik','veri'].forEach(t=>{
+    const el=document.getElementById('sTab-'+t);
+    if(el)el.style.display=t===tab?'block':'none';
+  });
+  document.querySelectorAll('#settingsTabRow .tab-btn').forEach((b,i)=>{
+    b.classList.toggle('active',['planlama','guvenlik','veri'][i]===tab);
+  });
+  if(tab==='planlama'){renderGoals();renderDebts();renderRecurs();renderCatBudgets();renderDayOfWeek();}
+}
+
+function goPage(p){curPage=p;document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));document.getElementById('page'+p.charAt(0).toUpperCase()+p.slice(1)).classList.add('active');document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));const nb=document.getElementById('nav-'+p);if(nb)nb.classList.add('active');if(p==='rapor')setTimeout(renderRapor,50);else if(p==='gelir')renderGelir();else if(p==='islemler'){renderList();}else if(p==='ayarlar'){setSettingsTab('planlama');}else if(p==='yatirim'){renderInvestments();if(!pricesLoaded)fetchLivePrices();}else render();}
 // SELECTS
 function buildMonthSels(fm){
   const months=[...new Set([...expenses,...incomes].map(e=>e.date?.slice(0,7)).filter(Boolean))].sort().reverse();
@@ -852,6 +988,7 @@ function render(){
   document.getElementById('heroAvg').textContent=allExp.length?fmtS(tExp/allExp.length)+' ₺':'—';
   document.getElementById('heroMax').textContent=allExp.length?fmtS(Math.max(...allExp.map(e=>e.amount)))+' ₺':'—';
   document.getElementById('heroCount').textContent=allExp.length+' adet';
+  const lcb=document.getElementById('listCountBtn');if(lcb)lcb.textContent=allExp.length>0?`${allExp.length} işlem — görüntüle`:'Tüm giderleri görüntüle';
   const budget=getBudget(fm);const badge=document.getElementById('heroBadge');
   if(budget>0){const pct=Math.min(tExp/budget*100,100);const col=pct>=90?'#e05c7a':pct>=70?'#f5a623':'#3aaa6e';badge.textContent=`🎯 %${pct.toFixed(0)} kullanıldı`;badge.style.background=col+'22';badge.style.borderColor=col+'55';badge.style.color=col;}
   else{badge.textContent='🎯 Bütçe Hedefi Koy';badge.style.background='rgba(245,166,35,0.1)';badge.style.borderColor='rgba(245,166,35,0.25)';badge.style.color='var(--gold)';}
@@ -868,6 +1005,16 @@ function render(){
   else if(net>0&&!(budget>0&&(tExp/budget*100)>=90))showInsight('✅',`Harika! Bu ay <strong>${fmtTL(net)}</strong> tasarruf ettiniz.`);
   else document.getElementById('insightCard').style.display='none';
   renderList();
+}
+function toggleExpList(){
+  const wrap=document.getElementById('expListWrap');
+  const arrow=document.getElementById('expListArrow');
+  const btn=document.getElementById('expListToggleBtn');
+  const isOpen=wrap.style.display!=='none';
+  wrap.style.display=isOpen?'none':'block';
+  arrow.style.transform=isOpen?'rotate(0)':'rotate(180deg)';
+  btn.style.background=isOpen?'rgba(255,255,255,0.03)':'rgba(245,166,35,0.06)';
+  btn.style.borderColor=isOpen?'rgba(255,255,255,0.08)':'rgba(245,166,35,0.2)';
 }
 function renderList(){
   const fm=getMonth();const filtered=getFilteredExp(fm);document.getElementById('listCount').textContent=filtered.length+' kayıt';
