@@ -271,6 +271,32 @@ select option{background:#1a1829;}
       <div style="font-size:11px;color:var(--muted);margin-top:3px" id="predSub"></div>
     </div>
     <div class="insight" id="insightCard" style="display:none"><div class="insight-icon" id="insightIcon">💡</div><div class="insight-text" id="insightText"></div></div>
+
+    <!-- MASRAF İADESİ MAHSUP KARTI -->
+    <div id="masrafIadesiCard" style="display:none;border-radius:16px;background:linear-gradient(135deg,rgba(0,180,216,0.1),rgba(0,120,170,0.07));border:1px solid rgba(0,180,216,0.25);padding:14px 16px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <span style="font-size:18px">🔄</span>
+        <div style="font-size:12px;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:.06em">Masraf İadesi Mahsubu</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;background:rgba(0,0,0,0.2);border-radius:10px;overflow:hidden;">
+        <div style="padding:10px 8px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);">
+          <div style="font-size:9px;color:#e05c7a;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Şirket İçin Harcadım</div>
+          <div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#e05c7a" id="masrafGider">0 ₺</div>
+        </div>
+        <div style="padding:10px 8px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);">
+          <div style="font-size:9px;color:#3aaa6e;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">İade Aldım</div>
+          <div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#3aaa6e" id="masrafGelir">0 ₺</div>
+        </div>
+        <div style="padding:10px 8px;text-align:center;">
+          <div style="font-size:9px;color:#00b4d8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px" id="masrafNetLbl">Net</div>
+          <div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700" id="masrafNet">0 ₺</div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--muted);margin-top:10px;text-align:center">
+        İade aldığınızda <b style="color:#00b4d8">Gelir → Masraf İadesi</b> olarak girin — toplam harcamanızdan otomatik düşülür
+      </div>
+    </div>
+
     <!-- Son İşlemler Butonu -->
     <button onclick="goPage('islemler')" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;">
       <div style="display:flex;align-items:center;gap:10px">
@@ -392,7 +418,7 @@ select option{background:#1a1829;}
     <div class="card"><div class="card-body">
       <div class="field" id="catFieldWrap"><label>Kategori</label><div id="catBtns"></div></div>
       <div class="field" id="incCatFieldWrap" style="display:none"><label>Gelir Türü</label>
-        <select id="fIncCat"><option value="maas">💼 Maaş</option><option value="serbest">💻 Serbest Meslek</option><option value="kira_gelir">🏠 Kira Geliri</option><option value="yatirim_gelir">📈 Yatırım Getirisi</option><option value="ikramiye">🎁 İkramiye / Prim</option><option value="yan_gelir">🔧 Yan Gelir</option><option value="diger_gelir">💰 Diğer Gelir</option></select>
+        <select id="fIncCat"><option value="maas">💼 Maaş</option><option value="serbest">💻 Serbest Meslek</option><option value="kira_gelir">🏠 Kira Geliri</option><option value="yatirim_gelir">📈 Yatırım Getirisi</option><option value="ikramiye">🎁 İkramiye / Prim</option><option value="yan_gelir">🔧 Yan Gelir</option><option value="masraf_iade_gelir">🔄 Masraf İadesi</option><option value="diger_gelir">💰 Diğer Gelir</option></select>
       </div>
       <div style="display:flex;gap:10px;margin-bottom:12px;">
         <div class="field" style="flex:2;margin-bottom:0"><label>Açıklama</label><input type="text" id="fDesc" placeholder="ör. A101 market"/></div>
@@ -678,10 +704,10 @@ const CATS=[
   {id:'araba',l:'Araba',i:'🚗',c:'#2ecc71',g:'ulasim'},{id:'yakit',l:'Yakıt',i:'⛽',c:'#e67e22',g:'ulasim'},{id:'arababakim',l:'Bakım/Servis',i:'🔧',c:'#7f8c8d',g:'ulasim'},{id:'lastik',l:'Lastik',i:'🛞',c:'#34495e',g:'ulasim'},{id:'arabasigorta',l:'Sigorta/Kasko',i:'🛡️',c:'#8e44ad',g:'ulasim'},{id:'muayene',l:'Muayene',i:'📋',c:'#16a085',g:'ulasim'},{id:'otoparkhgs',l:'Otopark/HGS',i:'🅿️',c:'#2980b9',g:'ulasim'},{id:'mtv',l:'MTV',i:'🧾',c:'#c0392b',g:'ulasim'},{id:'trafikcezasi',l:'Trafik Cezası',i:'🚨',c:'#e74c3c',g:'ulasim'},{id:'ulasim',l:'Toplu Taşıma',i:'🚌',c:'#3aaa6e',g:'ulasim'},
   {id:'saglik',l:'Sağlık',i:'💊',c:'#00a8a8',g:'kisisel'},{id:'giyim',l:'Giyim',i:'🧥',c:'#d4a017',g:'kisisel'},{id:'kozmetik',l:'Kozmetik',i:'🪥',c:'#fd79a8',g:'kisisel'},
   {id:'kredikarti',l:'Kredi Kartı',i:'💳',c:'#c0392b',g:'odeme'},{id:'borcodeme',l:'Borç Ödemesi',i:'🏦',c:'#8e44ad',g:'odeme'},{id:'taksit',l:'Taksit',i:'📅',c:'#2980b9',g:'odeme'},{id:'odemediger',l:'Diğer Ödeme',i:'💸',c:'#7f8c8d',g:'odeme'},
-  {id:'eglence',l:'Eğlence',i:'🎬',c:'#e85d04',g:'diger'},{id:'egitim',l:'Eğitim',i:'📚',c:'#5c77e0',g:'diger'},{id:'sigorta',l:'Sigorta',i:'🛡️',c:'#8e44ad',g:'diger'},{id:'tatil',l:'Tatil/Seyahat',i:'✈️',c:'#16a085',g:'diger'},{id:'yatirim',l:'Yatırım',i:'📈',c:'#f39c12',g:'diger'},{id:'diger',l:'Diğer',i:'📦',c:'#888',g:'diger'}
+  {id:'eglence',l:'Eğlence',i:'🎬',c:'#e85d04',g:'diger'},{id:'egitim',l:'Eğitim',i:'📚',c:'#5c77e0',g:'diger'},{id:'sigorta',l:'Sigorta',i:'🛡️',c:'#8e44ad',g:'diger'},{id:'tatil',l:'Tatil/Seyahat',i:'✈️',c:'#16a085',g:'diger'},{id:'yatirim',l:'Yatırım',i:'📈',c:'#f39c12',g:'diger'},{id:'masraf_iadesi',l:'Masraf İadesi',i:'🔄',c:'#00b4d8',g:'diger'},{id:'diger',l:'Diğer',i:'📦',c:'#888',g:'diger'}
 ];
 const CAT_GROUPS={gunluk:{l:'Günlük',i:'🗂️'},fatura:{l:'Faturalar',i:'📋'},konut:{l:'Konut',i:'🏘️'},ulasim:{l:'Ulaşım',i:'🚦'},kisisel:{l:'Kişisel',i:'👤'},odeme:{l:'Ödemeler',i:'💳'},diger:{l:'Diğer',i:'📦'}};
-const INC_CATS={maas:{l:'Maaş',i:'💼',c:'#3aaa6e'},serbest:{l:'Serbest',i:'💻',c:'#4a90d9'},kira_gelir:{l:'Kira Geliri',i:'🏠',c:'#7b5ea7'},yatirim_gelir:{l:'Yatırım',i:'📈',c:'#f39c12'},ikramiye:{l:'İkramiye',i:'🎁',c:'#e85d04'},yan_gelir:{l:'Yan Gelir',i:'🔧',c:'#1abc9c'},diger_gelir:{l:'Diğer',i:'💰',c:'#888'}};
+const INC_CATS={maas:{l:'Maaş',i:'💼',c:'#3aaa6e'},serbest:{l:'Serbest',i:'💻',c:'#4a90d9'},kira_gelir:{l:'Kira Geliri',i:'🏠',c:'#7b5ea7'},yatirim_gelir:{l:'Yatırım',i:'📈',c:'#f39c12'},ikramiye:{l:'İkramiye',i:'🎁',c:'#e85d04'},yan_gelir:{l:'Yan Gelir',i:'🔧',c:'#1abc9c'},masraf_iade_gelir:{l:'Masraf İadesi',i:'🔄',c:'#00b4d8'},diger_gelir:{l:'Diğer',i:'💰',c:'#888'}};
 const KW={market:['a101','bim','migros','şok','carrefour','market'],yemek:['yemek','restoran','lokanta','burger','pizza','döner','getir'],kafe:['cafe','kafe','kahve','starbucks'],elektrik:['elektrik','tedaş'],dogalgaz:['doğalgaz','igdaş','gaz'],su:['su fatura','iski'],internet:['internet','fiber','ttnet','superonline'],ceptel:['telefon fatura','turkcell','vodafone'],tvyayin:['netflix','disney','exxen','blutv','bein','tabii'],kira:['kira'],aidat:['aidat','site','apartman'],evmasraf:['tadilat','boya','mobilya'],araba:['araç','oto yıkama','yıkama'],yakit:['benzin','mazot','motorin','lpg','akaryakıt','shell','opet','petrol ofisi','total','bp'],arababakim:['bakım','servis','yağ değişimi','oto tamir','tamirci'],lastik:['lastik','jant'],arabasigorta:['kasko','trafik sigorta','araç sigorta'],muayene:['muayene','tüvtürk'],otoparkhgs:['otopark','hgs','ogs','vale'],mtv:['mtv','motorlu taşıtlar vergisi'],trafikcezasi:['trafik cezası','ceza','e-devlet ceza'],ulasim:['otobüs','metro','akbil','tramvay','taksi','uber'],saglik:['eczane','doktor','hastane','ilaç'],giyim:['kıyafet','ayakkabı','zara','lcw'],kozmetik:['kozmetik','parfüm','berber','kuaför'],eglence:['sinema','oyun','konser'],egitim:['kurs','kitap','udemy'],sigorta:['sigorta','dask'],tatil:['otel','uçak','tatil'],yatirim:['borsa','altın','döviz','kripto'],kredikarti:['kredi kartı','kredi kart','kkart','garanti','yapıkredi','akbank','ziraat','vakıfbank','halkbank','enpara'],alisveris:['alışveriş','shopping','trendyol','hepsiburada','amazon','n11','gittigidiyor'],borcodeme:['borç','ödeme','banka ödemesi'],taksit:['taksit','instalment']};
 const MN=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
 const DAYS_TR=['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
@@ -1109,35 +1135,62 @@ function render(){
   if(fm==='all'){const sEl=document.getElementById('monthSel');if(sEl)sEl.value='all';}
   const allMode=fm==='all';
   const allExp=allMode?expenses.slice():expenses.filter(e=>e.date?.startsWith(fm));const allInc=allMode?incomes.slice():incomes.filter(i=>i.date?.startsWith(fm));
-  const tExp=allExp.reduce((s,e)=>s+e.amount,0);const tInc=allInc.reduce((s,i)=>s+i.amount,0);const net=tInc-tExp;
+  const tExp=allExp.reduce((s,e)=>s+e.amount,0);const tInc=allInc.reduce((s,i)=>s+i.amount,0);
+
+  // Masraf İadesi mantığı:
+  // Şirket adına yapılan harcama hangi kategoride olursa olsun,
+  // şirket ödemeyi geri verdiğinde (masraf_iade_gelir) toplam giderden düşülür.
+  const masrafGelir=allInc.filter(i=>i.category==='masraf_iade_gelir').reduce((s,i)=>s+i.amount,0);
+  const masrafGider=allExp.filter(e=>e.category==='masraf_iadesi').reduce((s,e)=>s+e.amount,0);
+  const masrafNet=masrafGelir-masrafGider;
+
+  // Kişisel gider = toplam gider - alınan iadeler
+  const kisiselExp=Math.max(tExp-masrafGelir,0);
+  // Kişisel gelir = toplam gelir - iade gelirleri (bunlar kişisel gelir sayılmaz)
+  const kisiselInc=tInc-masrafGelir;
+  const net=kisiselInc-kisiselExp;
+  const masrafEl=document.getElementById('masrafIadesiCard');
+  if(masrafEl){
+    if(masrafGider>0||masrafGelir>0){
+      masrafEl.style.display='block';
+      document.getElementById('masrafGider').textContent=fmtTL(masrafGider);
+      document.getElementById('masrafGelir').textContent=fmtTL(masrafGelir);
+      const netEl=document.getElementById('masrafNet');
+      netEl.textContent=(masrafNet>=0?'+':'')+fmtTL(masrafNet);
+      netEl.style.color=masrafNet>=0?'#3aaa6e':'#e05c7a';
+      document.getElementById('masrafNetLbl').textContent=masrafNet>=0?'Alacaklısınız':'Borcunuz var';
+    }else masrafEl.style.display='none';
+  }
   const nc=document.getElementById('netCard');nc.className='net-card '+(net>0?'positive':net<0?'negative':'zero');
   document.getElementById('netIcon').textContent=net>0?'📈':net<0?'📉':'⚖️';
   document.getElementById('netAmount').textContent=fmtTL(Math.abs(net));document.getElementById('netAmount').style.color=net>0?'#3aaa6e':net<0?'#e05c7a':'var(--muted)';
   document.getElementById('netSub').textContent=net>0?'Tasarruf ettiniz 🎉':net<0?'Bütçe aşıldı ⚠️':'Dengede ⚖️';
-  document.getElementById('ozIncTotal').textContent=fmtTL(tInc);document.getElementById('ozExpTotal').textContent=fmtTL(tExp);
-  document.getElementById('heroAmount').textContent=fmtTL(tExp);
-  document.getElementById('heroAvg').textContent=allExp.length?fmtS(tExp/allExp.length)+' ₺':'—';
-  document.getElementById('heroMax').textContent=allExp.length?fmtS(Math.max(...allExp.map(e=>e.amount)))+' ₺':'—';
-  document.getElementById('heroCount').textContent=allExp.length+' adet';
+  document.getElementById('ozIncTotal').textContent=fmtTL(kisiselInc);
+  document.getElementById('ozExpTotal').textContent=fmtTL(kisiselExp);
+  document.getElementById('heroAmount').textContent=fmtTL(kisiselExp);
+  const kisiselExpList=allExp.filter(e=>e.category!=='masraf_iadesi');
+  document.getElementById('heroAvg').textContent=kisiselExpList.length?fmtS(kisiselExp/kisiselExpList.length)+' ₺':'—';
+  document.getElementById('heroMax').textContent=kisiselExpList.length?fmtS(Math.max(...kisiselExpList.map(e=>e.amount)))+' ₺':'—';
+  document.getElementById('heroCount').textContent=kisiselExpList.length+' adet';
   const lcb=document.getElementById('listCountBtn');if(lcb)lcb.textContent=allExp.length>0?`${allExp.length} işlem — görüntüle`:'Tüm giderleri görüntüle';
   const badge=document.getElementById('heroBadge');
   const budget=allMode?0:getBudget(fm);
   if(allMode){badge.textContent='📅 Tüm Zamanlar';badge.style.background='rgba(255,255,255,0.05)';badge.style.borderColor='rgba(255,255,255,0.1)';badge.style.color='var(--muted)';badge.onclick=null;badge.style.cursor='default';}
-  else{badge.onclick=openBudgetModal;badge.style.cursor='pointer';if(budget>0){const pct=Math.min(tExp/budget*100,100);const col=pct>=90?'#e05c7a':pct>=70?'#f5a623':'#3aaa6e';badge.textContent=`🎯 %${pct.toFixed(0)} kullanıldı`;badge.style.background=col+'22';badge.style.borderColor=col+'55';badge.style.color=col;}
+  else{badge.onclick=openBudgetModal;badge.style.cursor='pointer';if(budget>0){const pct=Math.min(kisiselExp/budget*100,100);const col=pct>=90?'#e05c7a':pct>=70?'#f5a623':'#3aaa6e';badge.textContent=`🎯 %${pct.toFixed(0)} kullanıldı`;badge.style.background=col+'22';badge.style.borderColor=col+'55';badge.style.color=col;}
   else{badge.textContent='🎯 Bütçe Hedefi Koy';badge.style.background='rgba(245,166,35,0.1)';badge.style.borderColor='rgba(245,166,35,0.25)';badge.style.color='var(--gold)';}}
   const bw=document.getElementById('budgetWrap');
-  if(!allMode&&budget>0){bw.style.display='block';const pct=Math.min(tExp/budget*100,100);const col=pct>=90?'#e05c7a':pct>=70?'#f5a623':'#3aaa6e';document.getElementById('budgetLbl').textContent=fmtTL(budget);document.getElementById('budgetPctLbl').textContent='%'+pct.toFixed(0);document.getElementById('budgetPctLbl').style.color=col;document.getElementById('budgetFill').style.cssText=`width:${pct}%;background:${col};border-radius:6px;`;}else bw.style.display='none';
+  if(!allMode&&budget>0){bw.style.display='block';const pct=Math.min(kisiselExp/budget*100,100);const col=pct>=90?'#e05c7a':pct>=70?'#f5a623':'#3aaa6e';document.getElementById('budgetLbl').textContent=fmtTL(budget);document.getElementById('budgetPctLbl').textContent='%'+pct.toFixed(0);document.getElementById('budgetPctLbl').style.color=col;document.getElementById('budgetFill').style.cssText=`width:${pct}%;background:${col};border-radius:6px;`;}else bw.style.display='none';
   const ce=document.getElementById('heroCompare');
-  if(!allMode){const pv=expenses.filter(e=>e.date?.startsWith(prevM(fm))).reduce((s,e)=>s+e.amount,0);if(pv>0&&tExp>0){const diff=((tExp-pv)/pv*100).toFixed(1);const up=parseFloat(diff)>0;ce.innerHTML=`<span style="color:${up?'#e05c7a':'#3aaa6e'};font-weight:600">${up?'▲':'▼'}%${Math.abs(diff)}</span> <span style="color:var(--muted)">geçen aya göre</span>`;}else ce.innerHTML='';}
+  if(!allMode){const pvAll=expenses.filter(e=>e.date?.startsWith(prevM(fm)));const pv=pvAll.filter(e=>e.category!=='masraf_iadesi').reduce((s,e)=>s+e.amount,0);if(pv>0&&kisiselExp>0){const diff=((kisiselExp-pv)/pv*100).toFixed(1);const up=parseFloat(diff)>0;ce.innerHTML=`<span style="color:${up?'#e05c7a':'#3aaa6e'};font-weight:600">${up?'▲':'▼'}%${Math.abs(diff)}</span> <span style="color:var(--muted)">geçen aya göre</span>`;}else ce.innerHTML='';}
   else ce.innerHTML='';
-  if(!allMode&&fm===nowM()){const dg=new Date().getDate();const dt=new Date(new Date().getFullYear(),new Date().getMonth()+1,0).getDate();if(dg>2&&tExp>0){const pred=(tExp/dg)*dt;document.getElementById('predCard').style.display='block';document.getElementById('predAmount').textContent=fmtTL(pred);document.getElementById('predSub').textContent=`${dg}. gün tahmini · ${dt-dg} gün kaldı`;if(budget>0&&pred>budget)showInsight('🚨',`Tahminen <strong>${fmtTL(pred)}</strong> harcayacaksınız — bütçeyi <strong>${fmtTL(pred-budget)}</strong> aşıyor!`);}else document.getElementById('predCard').style.display='none';}else document.getElementById('predCard').style.display='none';
+  if(!allMode&&fm===nowM()){const dg=new Date().getDate();const dt=new Date(new Date().getFullYear(),new Date().getMonth()+1,0).getDate();if(dg>2&&kisiselExp>0){const pred=(kisiselExp/dg)*dt;document.getElementById('predCard').style.display='block';document.getElementById('predAmount').textContent=fmtTL(pred);document.getElementById('predSub').textContent=`${dg}. gün tahmini · ${dt-dg} gün kaldı`;if(budget>0&&pred>budget)showInsight('🚨',`Tahminen <strong>${fmtTL(pred)}</strong> harcayacaksınız — bütçeyi <strong>${fmtTL(pred-budget)}</strong> aşıyor!`);}else document.getElementById('predCard').style.display='none';}else document.getElementById('predCard').style.display='none';
   const cd=CATS.map(c=>({...c,t:allExp.filter(e=>e.category===c.id).reduce((s,e)=>s+e.amount,0)})).filter(c=>c.t>0).sort((a,b)=>b.t-a.t);
   const strip=document.getElementById('catStrip');strip.innerHTML='';
   const ac=document.createElement('div');ac.className='cat-chip';ac.style.cssText=filterCat===null?'border-color:rgba(245,166,35,0.5);background:rgba(245,166,35,0.1)':'';
-  ac.innerHTML=`<div class="chip-icon">📋</div><div class="chip-amt" style="color:var(--gold)">${fmtS(tExp)} ₺</div><div class="chip-lbl">Tümü</div>`;ac.onclick=()=>{filterCat=null;render();};strip.appendChild(ac);
+  ac.innerHTML=`<div class="chip-icon">📋</div><div class="chip-amt" style="color:var(--gold)">${fmtS(kisiselExp)} ₺</div><div class="chip-lbl">Tümü</div>`;ac.onclick=()=>{filterCat=null;render();};strip.appendChild(ac);
   cd.forEach(c=>{const ch=document.createElement('div');ch.className='cat-chip';ch.style.cssText=`border-color:${filterCat===c.id?c.c:c.c+'33'};background:${c.c}${filterCat===c.id?'18':'0a'}`;ch.innerHTML=`<div class="chip-icon">${c.i}</div><div class="chip-amt" style="color:${c.c}">${fmtS(c.t)} ₺</div><div class="chip-lbl">${c.l}</div>`;ch.onclick=()=>{filterCat=filterCat===c.id?null:c.id;render();};strip.appendChild(ch);});
-  const tc=cd[0];if(tc&&tExp>0&&(tc.t/tExp*100)>40&&!(budget>0&&(tExp/budget*100)>=90))showInsight('💡',`${allMode?'Tüm zamanlarda':'Bu ay'} en fazla <strong>${tc.l}</strong> kategorisinde harcıyorsunuz — toplam harcamanın <strong>%${(tc.t/tExp*100).toFixed(0)}'i</strong>.`);
-  else if(net>0&&!(budget>0&&(tExp/budget*100)>=90))showInsight('✅',`Harika! ${allMode?'Tüm zamanlarda':'Bu ay'} <strong>${fmtTL(net)}</strong> tasarruf ettiniz.`);
+  const tc=cd[0];if(tc&&kisiselExp>0&&(tc.t/kisiselExp*100)>40&&!(budget>0&&(kisiselExp/budget*100)>=90))showInsight('💡',`${allMode?'Tüm zamanlarda':'Bu ay'} en fazla <strong>${tc.l}</strong> kategorisinde harcıyorsunuz — toplam harcamanın <strong>%${(tc.t/kisiselExp*100).toFixed(0)}'i</strong>.`);
+  else if(net>0&&!(budget>0&&(kisiselExp/budget*100)>=90))showInsight('✅',`Harika! ${allMode?'Tüm zamanlarda':'Bu ay'} <strong>${fmtTL(net)}</strong> tasarruf ettiniz.`);
   else document.getElementById('insightCard').style.display='none';
   renderList();
 }
@@ -1286,8 +1339,23 @@ function renderRaporAy(){
     const labels=months.map(m=>mLabel(m));const values=months.map(m=>data.filter(e=>e.date?.startsWith(m)).reduce((s,e)=>s+e.amount,0));
     drawBar(labels,values);renderRCatList(data,total);return;
   }
-  const data=expenses.filter(e=>e.date?.startsWith(fm));const total=data.reduce((s,e)=>s+e.amount,0);document.getElementById('raporPeriodLbl').textContent=mLabel(fm);document.getElementById('raporTotal').textContent=fmtTL(total);document.getElementById('raporTotal').style.color='var(--gold)';document.getElementById('raporSubLbl').textContent=data.length+' işlem';document.getElementById('barChartTitle').textContent='Günlük Harcamalar';drawPie(data,total);const days=new Date(parseInt(fm.split('-')[0]),parseInt(fm.split('-')[1]),0).getDate();const labels=[],values=[];for(let d=1;d<=days;d++){const key=`${fm}-${String(d).padStart(2,'0')}`;labels.push(String(d));values.push(data.filter(e=>e.date===key).reduce((s,e)=>s+e.amount,0));}drawBar(labels,values);renderRCatList(data,total);}
-function renderRaporYil(){const yr=document.getElementById('yilSel').value||String(new Date().getFullYear());const data=expenses.filter(e=>e.date?.startsWith(yr));const total=data.reduce((s,e)=>s+e.amount,0);document.getElementById('raporPeriodLbl').textContent=yr+' Yılı';document.getElementById('raporTotal').textContent=fmtTL(total);document.getElementById('raporTotal').style.color='var(--gold)';document.getElementById('raporSubLbl').textContent=data.length+' işlem';document.getElementById('barChartTitle').textContent='Aylık Harcamalar';drawPie(data,total);const labels=MN.map(m=>m.slice(0,3));const values=MN.map((_,i)=>data.filter(e=>e.date?.startsWith(`${yr}-${String(i+1).padStart(2,'0')}`)).reduce((s,e)=>s+e.amount,0));drawBar(labels,values);renderRCatList(data,total);}
+  const rawData=expenses.filter(e=>e.date?.startsWith(fm));
+  const data=rawData.filter(e=>e.category!=='masraf_iadesi');
+  const masrafData=rawData.filter(e=>e.category==='masraf_iadesi');
+  const masrafTot=masrafData.reduce((s,e)=>s+e.amount,0);
+  const total=data.reduce((s,e)=>s+e.amount,0);
+  document.getElementById('raporPeriodLbl').textContent=mLabel(fm);
+  document.getElementById('raporTotal').textContent=fmtTL(total);
+  document.getElementById('raporTotal').style.color='var(--gold)';
+  document.getElementById('raporSubLbl').textContent=`${data.length} işlem${masrafTot>0?' · Masraf iadesi: '+fmtTL(masrafTot)+' düşüldü':''}`;
+  document.getElementById('barChartTitle').textContent='Günlük Harcamalar';
+  drawPie(data,total);
+  const days=new Date(parseInt(fm.split('-')[0]),parseInt(fm.split('-')[1]),0).getDate();
+  const labels=[],values=[];
+  for(let d=1;d<=days;d++){const key=`${fm}-${String(d).padStart(2,'0')}`;labels.push(String(d));values.push(data.filter(e=>e.date===key).reduce((s,e)=>s+e.amount,0));}
+  drawBar(labels,values);renderRCatList(data,total);
+}
+function renderRaporYil(){const yr=document.getElementById('yilSel').value||String(new Date().getFullYear());const rawData=expenses.filter(e=>e.date?.startsWith(yr));const data=rawData.filter(e=>e.category!=='masraf_iadesi');const total=data.reduce((s,e)=>s+e.amount,0);document.getElementById('raporPeriodLbl').textContent=yr+' Yılı';document.getElementById('raporTotal').textContent=fmtTL(total);document.getElementById('raporTotal').style.color='var(--gold)';document.getElementById('raporSubLbl').textContent=data.length+' işlem';document.getElementById('barChartTitle').textContent='Aylık Harcamalar';drawPie(data,total);const labels=MN.map(m=>m.slice(0,3));const values=MN.map((_,i)=>data.filter(e=>e.date?.startsWith(`${yr}-${String(i+1).padStart(2,'0')}`)).reduce((s,e)=>s+e.amount,0));drawBar(labels,values);renderRCatList(data,total);}
 function renderKarRapor(){const months=[];for(let i=5;i>=0;i--){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);months.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`);}const eT=months.map(m=>expenses.filter(e=>e.date?.startsWith(m)).reduce((s,e)=>s+e.amount,0));const iT=months.map(m=>incomes.filter(i=>i.date?.startsWith(m)).reduce((s,i)=>s+i.amount,0));const tI=iT.reduce((a,b)=>a+b,0),tE=eT.reduce((a,b)=>a+b,0),net=tI-tE;document.getElementById('raporPeriodLbl').textContent='Son 6 Ay';document.getElementById('raporTotal').textContent=fmtTL(Math.abs(net));document.getElementById('raporTotal').style.color=net>=0?'#3aaa6e':'#e05c7a';document.getElementById('raporSubLbl').textContent=`Gelir: ${fmtTL(tI)} · Gider: ${fmtTL(tE)}`;document.getElementById('barChartTitle').textContent='';drawKarBar(months,iT,eT);renderRCatList(expenses,tE);}
 function drawPie(data,total){
   const canvas=document.getElementById('pieCanvas'),ctx=canvas.getContext('2d');
