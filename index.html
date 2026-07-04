@@ -270,9 +270,12 @@ select option{background:#1a1829;}
       </div>
     </div>
     <div class="hero-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(245,166,35,0.2);border-radius:8px;">
-          <select id="monthSel" onchange="render()" style="background:transparent;border:none;color:var(--text);padding:5px 26px 5px 10px;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer;appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2710%27 height=%276%27%3E%3Cpath d=%27M1 1l4 4 4-4%27 stroke=%27%23f5a623%27 stroke-width=%271.3%27 fill=%27none%27 stroke-linecap=%27round%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 8px center;"></select>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;row-gap:8px;">
+        <div style="display:flex;align-items:center;gap:4px;background:rgba(255,255,255,0.07);border:1px solid rgba(245,166,35,0.2);border-radius:10px;padding:2px;">
+          <button onclick="shiftMonth(-1)" style="background:rgba(245,166,35,0.12);border:none;color:var(--gold);font-size:20px;font-weight:700;width:36px;height:36px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">‹</button>
+          <span id="monthSelLabel" onclick="openMonthPicker()" style="font-size:13px;color:var(--text);padding:5px 8px;cursor:pointer;white-space:nowrap;font-weight:600">Temmuz 2026</span>
+          <button onclick="shiftMonth(1)" style="background:rgba(245,166,35,0.12);border:none;color:var(--gold);font-size:20px;font-weight:700;width:36px;height:36px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">›</button>
+          <select id="monthSel" onchange="render()" style="display:none"></select>
         </div>
         <div id="heroBadge" style="background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.25);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--gold);font-weight:600;cursor:pointer;" onclick="openBudgetModal()">🎯 Bütçe Hedefi Koy</div>
       </div>
@@ -627,6 +630,16 @@ select option{background:#1a1829;}
 </nav>
 <!-- MODALS -->
 <div class="overlay" id="delModal" onclick="closeModal('delModal')"><div class="modal" onclick="event.stopPropagation()"><div style="font-size:34px;text-align:center;margin-bottom:10px">🗑️</div><div class="modal-title">Sil</div><div class="modal-sub">Bu işlem geri alınamaz.</div><div class="modal-btns"><button class="btn-ghost" onclick="closeModal('delModal')">İptal</button><button class="btn-danger" onclick="confirmDelete()">Sil</button></div></div></div>
+<div class="overlay" id="monthPickerModal" onclick="closeModal('monthPickerModal')"><div class="modal" onclick="event.stopPropagation()">
+  <div class="modal-title">📅 Dönem Seç</div>
+  <button class="btn-ghost" style="width:100%;margin:12px 0;font-size:13px;padding:10px" onclick="selectMonthFromPicker('all')">📅 Tüm Zamanlar</button>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <button onclick="shiftPickerYear(-1)" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--gold);font-size:16px;padding:6px 14px;cursor:pointer">‹</button>
+    <div id="pickerYearLbl" style="font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--text)"></div>
+    <button onclick="shiftPickerYear(1)" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--gold);font-size:16px;padding:6px 14px;cursor:pointer">›</button>
+  </div>
+  <div id="pickerMonthGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"></div>
+</div></div>
 <div class="overlay" id="budgetModal" onclick="closeBudgetModal()"><div class="modal" onclick="event.stopPropagation()"><div style="font-size:32px;text-align:center;margin-bottom:8px">🎯</div><div class="modal-title">Aylık Bütçe Hedefi</div><div class="modal-sub">Bu ay için harcama limitiniz</div><div class="field" style="margin-bottom:12px"><label>Tutar ₺</label><input type="number" id="budgetInput" placeholder="ör. 15000"/></div><div class="modal-btns"><button class="btn-ghost" onclick="closeBudgetModal()">İptal</button><button class="btn-gold" style="padding:12px" onclick="saveBudget()">Kaydet</button></div><button class="btn-ghost" style="width:100%;margin-top:8px;font-size:11px" onclick="clearBudget()">Bütçeyi Kaldır</button></div></div>
 <div class="overlay" id="goalModal" onclick="closeModal('goalModal')"><div class="modal" onclick="event.stopPropagation()"><div class="modal-title">🎯 Tasarruf Hedefi</div><div class="field" style="margin-top:12px"><label>Hedef Adı</label><input type="text" id="gName" placeholder="ör. Araba, Tatil"/></div><div class="field"><label>Hedef Tutar ₺</label><input type="number" id="gTarget" placeholder="50000"/></div><div class="field"><label>Mevcut Birikim ₺</label><input type="number" id="gSaved" placeholder="0"/></div><div class="field"><label>İkon (emoji)</label><input type="text" id="gIcon" placeholder="🎯" maxlength="2"/></div><div class="modal-btns"><button class="btn-ghost" onclick="closeModal('goalModal')">İptal</button><button class="btn-gold" style="padding:12px" onclick="saveGoal()">Kaydet</button></div></div></div>
 <div class="overlay" id="debtModal" onclick="closeModal('debtModal')"><div class="modal" onclick="event.stopPropagation()"><div class="modal-title">💳 Borç / Alacak</div><div class="field" style="margin-top:12px"><label>Kişi Adı</label><input type="text" id="dName" placeholder="ör. Ahmet"/></div><div class="field"><label>Tutar ₺</label><input type="number" id="dAmt" placeholder="0"/></div><div class="field"><label>Tür</label><select id="dType"><option value="borc">😓 Ben borçluyum</option><option value="alacak">🤝 Bende alacağı var</option></select></div><div class="field"><label>Tarih</label><input type="date" id="dDate"/></div><div class="field"><label>Not</label><input type="text" id="dNote" placeholder="opsiyonel"/></div><div class="modal-btns"><button class="btn-ghost" onclick="closeModal('debtModal')">İptal</button><button class="btn-gold" style="padding:12px" onclick="saveDebt()">Kaydet</button></div></div></div>
@@ -795,7 +808,7 @@ async function lsGetSec(k){
 let expenses=[],incomes=[],activeCat='kredikarti',activeCatGrp='odeme',addType='gider';
 let editId=null,editType=null,pendingDel=null,pendingDelType=null,curPage='ozet';
 let filterCat=null,searchQ='',sortDir='desc',raporTabState='ay';
-let goals=[],debts=[],recurs=[],catBudgets={};
+let goals=[],debts=[],recurs=[],catBudgets={},budgets={};
 // DB
 async function fetchAll(){
   const[er,ir]=await Promise.all([
@@ -836,6 +849,8 @@ async function sbLoadAllSettings(){
     debts=map['debts']||[];
     recurs=map['recurs']||[];
     catBudgets=map['catBudgets']||{};
+    budgets={};
+    data.forEach(r=>{if(r.key.startsWith('budget_'))budgets[r.key.slice(7)]=r.value;});
   }catch(_){}
 }
 async function sbLoadGoals(){goals=await dbGetSetting('goals')||[];}
@@ -1191,9 +1206,60 @@ function toggleNetDetail(){
   w.style.display=show?'block':'none';
   t.textContent=show?'Detayları Gizle ▴':'Detayları Gör ▾';
 }
+function setMonth(val){
+  const s=document.getElementById('monthSel');
+  if(![...s.options].some(o=>o.value===val)){const o=document.createElement('option');o.value=val;o.textContent=val==='all'?'📅 Tüm Zamanlar':mLabel(val);s.appendChild(o);}
+  s.value=val;
+  render();
+}
+function shiftMonth(dir){
+  const s=document.getElementById('monthSel');
+  let cur=s.value;
+  if(cur==='all'||!cur)cur=nowM();
+  let[y,m]=cur.split('-').map(Number);
+  m+=dir;
+  if(m<1){m=12;y--;}else if(m>12){m=1;y++;}
+  const ny=new Date().getFullYear(),nm=new Date().getMonth()+1;
+  if(y>ny||(y===ny&&m>nm))return;
+  setMonth(`${y}-${String(m).padStart(2,'0')}`);
+}
+function updateMonthLabel(){
+  const s=document.getElementById('monthSel'),lbl=document.getElementById('monthSelLabel');
+  if(!s||!lbl)return;
+  const v=s.value||nowM();
+  lbl.textContent=v==='all'?'📅 Tüm Zamanlar':mLabel(v);
+}
+let pickerYear=new Date().getFullYear();
+function openMonthPicker(){
+  const cur=document.getElementById('monthSel').value;
+  pickerYear=(cur&&cur!=='all')?parseInt(cur.split('-')[0]):new Date().getFullYear();
+  renderMonthPickerGrid();
+  document.getElementById('monthPickerModal').classList.add('show');
+}
+function shiftPickerYear(d){pickerYear+=d;renderMonthPickerGrid();}
+function renderMonthPickerGrid(){
+  document.getElementById('pickerYearLbl').textContent=pickerYear;
+  const grid=document.getElementById('pickerMonthGrid');grid.innerHTML='';
+  const cur=document.getElementById('monthSel').value;
+  const curY=cur&&cur!=='all'?cur.split('-')[0]:null,curM=cur&&cur!=='all'?cur.split('-')[1]:null;
+  const ny=new Date().getFullYear(),nm=new Date().getMonth()+1;
+  for(let m=1;m<=12;m++){
+    const val=`${pickerYear}-${String(m).padStart(2,'0')}`;
+    const isFuture=pickerYear>ny||(pickerYear===ny&&m>nm);
+    const isSel=String(pickerYear)===curY&&String(m).padStart(2,'0')===curM;
+    const btn=document.createElement('button');
+    btn.textContent=MN[m-1];
+    btn.disabled=isFuture;
+    btn.style.cssText=`padding:12px 4px;border-radius:10px;border:1px solid ${isSel?'var(--gold)':'rgba(255,255,255,0.1)'};background:${isSel?'rgba(245,166,35,0.15)':'rgba(255,255,255,0.03)'};color:${isFuture?'var(--muted2)':'var(--text)'};font-size:12px;font-weight:600;cursor:${isFuture?'not-allowed':'pointer'};opacity:${isFuture?'0.4':'1'}`;
+    if(!isFuture)btn.onclick=()=>selectMonthFromPicker(val);
+    grid.appendChild(btn);
+  }
+}
+function selectMonthFromPicker(val){closeModal('monthPickerModal');setMonth(val);}
 function render(){
   const fm=getMonth();buildMonthSels(fm==='all'?nowM():fm);
   if(fm==='all'){const sEl=document.getElementById('monthSel');if(sEl)sEl.value='all';}
+  updateMonthLabel();
   const allMode=fm==='all';
   const allExp=allMode?expenses.filter(e=>e.date&&e.date<=today()):expenses.filter(e=>e.date?.startsWith(fm));const allInc=allMode?incomes.filter(i=>i.date&&i.date<=today()):incomes.filter(i=>i.date?.startsWith(fm));
   const tExp=allExp.reduce((s,e)=>s+e.amount,0);const tInc=allInc.reduce((s,i)=>s+i.amount,0);
@@ -1370,11 +1436,11 @@ function cancelEdit(){editId=null;editType=null;clearForm();document.getElementB
 document.addEventListener('DOMContentLoaded',()=>{const d=document.getElementById('fDesc');if(d)d.addEventListener('input',()=>{if(d.value){const sel=d.selectionStart,selEnd=d.selectionEnd;const capped=capFirst(d.value);if(capped!==d.value){d.value=capped;d.setSelectionRange(sel,selEnd);}}if(addType!=='gider')return;const g=Object.entries(KW).find(([,kws])=>kws.some(k=>d.value.toLowerCase().includes(k)));if(g&&g[0]!==activeCat){activeCat=g[0];const gr=CATS.find(c=>c.id===g[0])?.g;if(gr)activeCatGrp=gr;buildCatBtns();}});});
 function askDel(id,type){pendingDel=id;pendingDelType=type;document.getElementById('delModal').classList.add('show');}
 function closeModal(id){document.getElementById(id).classList.remove('show');}
-const getBudget=async m=>await sbGetBudget(m);
-async function openBudgetModal(){const b=await getBudget(getMonth());document.getElementById('budgetInput').value=b||'';document.getElementById('budgetModal').classList.add('show');}
+const getBudget=m=>budgets[m]||0;
+async function openBudgetModal(){const b=getBudget(getMonth());document.getElementById('budgetInput').value=b||'';document.getElementById('budgetModal').classList.add('show');}
 function closeBudgetModal(){document.getElementById('budgetModal').classList.remove('show');}
-async function saveBudget(){const v=parseFloat(document.getElementById('budgetInput').value);if(!isNaN(v)&&v>0){await sbSetBudget(getMonth(),v);showToast('Bütçe kaydedildi ✓');}closeBudgetModal();render();}
-async function clearBudget(){await sbDelBudget(getMonth());closeBudgetModal();render();}
+async function saveBudget(){const v=parseFloat(document.getElementById('budgetInput').value);if(!isNaN(v)&&v>0){budgets[getMonth()]=v;await sbSetBudget(getMonth(),v);showToast('Bütçe kaydedildi ✓');}closeBudgetModal();render();}
+async function clearBudget(){delete budgets[getMonth()];await sbDelBudget(getMonth());closeBudgetModal();render();}
 function renderGoals(){const el=document.getElementById('goalList');el.innerHTML='';if(!goals.length){el.innerHTML='<p style="font-size:12px;color:var(--muted2);text-align:center;padding:10px">Henüz hedef yok</p>';return;}goals.forEach((g,i)=>{const pct=Math.min(g.saved/g.target*100,100);const col=pct>=100?'#3aaa6e':pct>=60?'#f5a623':'#4a90d9';const div=document.createElement('div');div.className='goal-item';div.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:18px">${g.icon||'🎯'}</span><span style="flex:1;font-size:14px;font-weight:500;margin:0 8px;color:var(--text)">${esc(g.name)}</span><button class="btn-sm-del" onclick="removeGoal(${i})">🗑</button></div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px"><span>${fmtS(g.saved)} ₺ / ${fmtS(g.target)} ₺</span><span style="color:${col};font-weight:700">%${pct.toFixed(0)}</span></div><div class="progress-bg"><div class="progress-fill" style="background:${col};width:${pct}%"></div></div>${pct>=100?'<div style="text-align:center;font-size:11px;color:#3aaa6e;margin-top:5px">🎉 Hedefe ulaştınız!</div>':''}`;el.appendChild(div);});}
 function openGoalModal(){['gName','gTarget','gSaved','gIcon'].forEach(id=>document.getElementById(id).value=id==='gIcon'?'🎯':'');document.getElementById('goalModal').classList.add('show');}
 function saveGoal(){const name=document.getElementById('gName').value.trim(),target=parseFloat(document.getElementById('gTarget').value),saved=parseFloat(document.getElementById('gSaved').value)||0,icon=document.getElementById('gIcon').value||'🎯';if(!name||isNaN(target)||target<=0){showToast('Ad ve hedef tutar giriniz.','error');return;}goals.push({name,target,saved,icon});sbSaveGoals();closeModal('goalModal');renderGoals();showToast('Hedef eklendi ✓');}
