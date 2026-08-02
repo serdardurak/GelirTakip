@@ -1,2 +1,0 @@
-# Projelerim
-web sitelerim
