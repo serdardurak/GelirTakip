@@ -237,6 +237,28 @@ select option{background:#1a1829;}
   <div class="topbar"><div class="topbar-row"><div class="page-title">Kişisel<br><span>Gider Takip</span></div><div style="display:flex;align-items:center;gap:10px"><div style="font-size:11px;color:var(--muted)">📅 <span id="todayLbl"></span></div></div></div></div>
   <div class="page-inner">
     <div id="connErr">⚠️ Bağlantı kurulamadı.</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px">Bu ayki gelir-gider durumunuzun genel özeti. Detaylar için aşağı kaydırın.</div>
+    <div class="card" style="background:linear-gradient(135deg,rgba(58,170,110,0.08),rgba(245,166,35,0.05));border-color:rgba(245,166,35,0.18)">
+      <div class="card-body" style="padding:14px 16px">
+        <div class="sec-label" style="margin-bottom:10px">🏆 Tüm Zamanlar</div>
+        <div style="display:flex;">
+          <div style="flex:1;text-align:center">
+            <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#3aaa6e" id="atInc">0 ₺</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:3px">Toplam Gelir</div>
+          </div>
+          <div style="width:1px;background:rgba(255,255,255,0.08)"></div>
+          <div style="flex:1;text-align:center">
+            <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#e05c7a" id="atExp">0 ₺</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:3px">Toplam Gider</div>
+          </div>
+          <div style="width:1px;background:rgba(255,255,255,0.08)"></div>
+          <div style="flex:1;text-align:center">
+            <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700" id="atNet">0 ₺</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:3px">Biriktirdiğim</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="net-card zero" id="netCard">
       <div style="font-size:32px" id="netIcon">💰</div>
       <div style="flex:1">
@@ -282,7 +304,7 @@ select option{background:#1a1829;}
           <button onclick="shiftMonth(1)" style="background:rgba(245,166,35,0.12);border:none;color:var(--gold);font-size:20px;font-weight:700;width:36px;height:36px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">›</button>
           <select id="monthSel" onchange="render()" style="display:none"></select>
         </div>
-        <div id="heroBadge" style="background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.25);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--gold);font-weight:600;cursor:pointer;" onclick="openBudgetModal()">🎯 Bütçe Hedefi Koy</div>
+        <div id="heroBadge" title="Bu ay için harcama limiti belirleyin, ne kadar harcadığınızı takip edin" style="background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.25);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--gold);font-weight:600;cursor:pointer;" onclick="openBudgetModal()">🎯 Bütçe Hedefi Koy</div>
       </div>
       <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Toplam Harcama</div>
       <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:4px" id="heroAmount">0 ₺</div>
@@ -294,7 +316,7 @@ select option{background:#1a1829;}
       <div class="hero-divider"></div>
       <div id="heroPredWrap" style="display:none">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-          <div style="font-size:10px;color:#4a90d9;text-transform:uppercase;letter-spacing:.05em;font-weight:600">📉 Ay Sonu Tahmini</div>
+          <div title="Şimdiye kadarki harcama hızınıza göre ay sonunda ne kadar harcamış olacağınızın tahmini" style="font-size:10px;color:#4a90d9;text-transform:uppercase;letter-spacing:.05em;font-weight:600">📉 Ay Sonu Tahmini</div>
           <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#4a90d9;white-space:nowrap" id="heroPredAmount">0 ₺</div>
         </div>
         <div style="font-size:11px;color:var(--muted);margin-top:3px" id="heroPredSub"></div>
@@ -362,6 +384,7 @@ select option{background:#1a1829;}
     </div>
   </div>
   <div class="page-inner">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px">Tüm gelir ve giderleriniz burada listelenir. Aramak için yazın, kategoriye göre filtrelemek için üstteki etiketlere dokunun.</div>
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
       <input type="text" id="searchInput" placeholder="İşlem ara…" oninput="onSearch()"/>
@@ -375,9 +398,7 @@ select option{background:#1a1829;}
 <div class="page" id="pageGelir">
   <div class="topbar"><div class="topbar-row"><div class="page-title">Gelir<br><span>Takibi</span></div><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#3aaa6e" id="gelirTotal">0 ₺</div></div></div>
   <div class="page-inner">
-    <div class="tab-row"><button class="tab-btn active" id="gtab-gelir" onclick="setGelirTab('gelir')">💰 Gelir</button><button class="tab-btn" id="gtab-yatirim" onclick="setGelirTab('yatirim')">💎 Yatırım</button></div>
-
-    <!-- GELİR SEKMESİ -->
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px">Bu ay aldığınız tüm gelirlerin listesi ve kategorilere göre dağılımı.</div>
     <div id="gTab-gelir">
       <div class="filter-bar"><label>Dönem:</label><select id="monthSelGelir" onchange="renderGelir()" style="max-width:180px;padding:8px 32px 8px 12px;font-size:13px;"></select></div>
       <div class="stat-grid" id="gelirStats"></div>
@@ -386,69 +407,13 @@ select option{background:#1a1829;}
       <div class="list-header" style="margin-top:14px"><div class="list-header-title">Gelir Listesi</div><div class="list-count" id="gelirCount">0</div></div>
       <div id="gelirList"></div>
     </div>
-
-    <!-- YATIRIM SEKMESİ -->
-    <div id="gTab-yatirim" style="display:none">
-      <div style="display:flex;justify-content:flex-end;margin-bottom:10px">
-        <button onclick="fetchLivePrices()" id="refreshBtn" style="background:rgba(58,170,110,0.12);border:1px solid rgba(58,170,110,0.3);border-radius:10px;padding:7px 12px;font-size:12px;color:#3aaa6e;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;">↻ Fiyat Güncelle</button>
-      </div>
-      <div id="priceUpdateTime" style="text-align:center;font-size:10px;color:var(--muted);margin-bottom:10px;"></div>
-
-      <!-- PORTFÖY ÖZET -->
-      <div style="background:linear-gradient(135deg,#0e1a2e,#0a1520);border:1px solid rgba(58,170,110,0.2);border-radius:18px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:radial-gradient(circle,rgba(58,170,110,0.1),transparent 70%);pointer-events:none;"></div>
-        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Toplam Portföy Değeri</div>
-        <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:#3aaa6e;line-height:1;margin-bottom:6px" id="portTotal">0 ₺</div>
-        <div style="height:1px;background:rgba(255,255,255,0.06);margin:12px 0;"></div>
-        <div style="display:flex;justify-content:space-between;">
-          <div style="text-align:center;flex:1">
-            <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px">Maliyet</div>
-            <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--text)" id="portCost">0 ₺</div>
-          </div>
-          <div style="width:1px;background:rgba(255,255,255,0.07);"></div>
-          <div style="text-align:center;flex:1" id="portPLCard">
-            <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px">Kar / Zarar</div>
-            <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700" id="portPL">0 ₺</div>
-          </div>
-          <div style="width:1px;background:rgba(255,255,255,0.07);"></div>
-          <div style="text-align:center;flex:1">
-            <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px">Değişim</div>
-            <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700" id="portPLPct">%0</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CANLI FİYATLAR -->
-      <div class="card" style="margin-bottom:12px">
-        <div class="card-body" style="padding:12px 14px">
-          <div class="sec-label">Güncel Piyasa</div>
-          <div id="livePricesRow" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;">
-            <div style="flex-shrink:0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px 12px;min-width:90px;text-align:center"><div style="font-size:16px">🥇</div><div style="font-size:10px;color:var(--muted);margin:3px 0">Gram Altın</div><div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#f5a623" id="price-gold">—</div></div>
-            <div style="flex-shrink:0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px 12px;min-width:90px;text-align:center"><div style="font-size:16px">💵</div><div style="font-size:10px;color:var(--muted);margin:3px 0">USD/TRY</div><div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#4a90d9" id="price-usd">—</div></div>
-            <div style="flex-shrink:0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px 12px;min-width:90px;text-align:center"><div style="font-size:16px">💶</div><div style="font-size:10px;color:var(--muted);margin:3px 0">EUR/TRY</div><div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#4a90d9" id="price-eur">—</div></div>
-            <div style="flex-shrink:0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px 12px;min-width:90px;text-align:center"><div style="font-size:16px">💷</div><div style="font-size:10px;color:var(--muted);margin:3px 0">GBP/TRY</div><div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#4a90d9" id="price-gbp">—</div></div>
-            <div style="flex-shrink:0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px 12px;min-width:90px;text-align:center"><div style="font-size:16px">₿</div><div style="font-size:10px;color:var(--muted);margin:3px 0">BTC/TRY</div><div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:#f7931a" id="price-btc">—</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- VARLIKLAR -->
-      <div class="list-header">
-        <div class="list-header-title">Varlıklarım</div>
-        <button onclick="openInvModal()" style="background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0d0c1a;border:none;border-radius:8px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;">+ Varlık Ekle</button>
-      </div>
-      <div class="card"><div class="card-body">
-        <div class="sec-label">📊 Güncel Piyasa — Alış / Satış</div>
-        <div id="priceTable"><p style="font-size:12px;color:var(--muted2);text-align:center;padding:12px">Fiyat Güncelle butonuna basın</p></div>
-      </div></div>
-      <div id="invList"></div>
-    </div>
   </div>
 </div>
 <!-- EKLE -->
 <div class="page" id="pageEkle">
   <div class="topbar"><div class="topbar-row"><div class="page-title" id="formPageTitle">Yeni<br><span>Gider Ekle</span></div></div></div>
   <div class="page-inner">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Para harcadıysanız "Gider", para kazandıysanız "Gelir" seçip bilgileri girin.</div>
     <div class="tab-row"><button class="tab-btn active" id="tabGider" onclick="setAddType('gider')">💸 Gider</button><button class="tab-btn" id="tabGelir2" onclick="setAddType('gelir')">💰 Gelir</button></div>
     <div id="quickSection" style="display:none"><div class="sec-label" style="margin-bottom:8px">⚡ Sık Kullanılanlar</div><div class="quick-chips" id="quickChips"></div></div>
     <div class="card"><div class="card-body">
@@ -481,8 +446,9 @@ select option{background:#1a1829;}
 </div>
 <!-- RAPOR -->
 <div class="page" id="pageRapor">
-  <div class="topbar"><div class="topbar-row"><div class="page-title">Harcama<br><span>Raporu</span></div><div style="display:flex;gap:5px"><button class="rprt-tab active" id="rtab-ay" onclick="setRaporTab('ay')">Aylık</button><button class="rprt-tab" id="rtab-yil" onclick="setRaporTab('yil')">Yıllık</button><button class="rprt-tab" id="rtab-kar" onclick="setRaporTab('kar')">G/G</button></div></div></div>
+  <div class="topbar"><div class="topbar-row"><div class="page-title">Harcama<br><span>Raporu</span></div><div style="display:flex;gap:5px"><button class="rprt-tab active" id="rtab-ay" onclick="setRaporTab('ay')">Aylık</button><button class="rprt-tab" id="rtab-yil" onclick="setRaporTab('yil')">Yıllık</button><button class="rprt-tab" id="rtab-kar" onclick="setRaporTab('kar')" title="Gelir / Gider Karşılaştırma">Gelir/Gider</button></div></div></div>
   <div class="page-inner">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Harcamalarınızı grafiklerle inceleyin, dönem seçin ve dilerseniz raporu indirin.</div>
     <div class="filter-bar" id="raporAyFilter"><label>Dönem:</label><select id="monthSelRapor" onchange="renderRapor()" style="max-width:180px;padding:8px 32px 8px 12px;font-size:13px;"></select></div>
     <div class="filter-bar" id="raporYilFilter" style="display:none"><label>Yıl:</label><select id="yilSel" onchange="renderRapor()" style="max-width:120px;padding:8px 32px 8px 12px;font-size:13px;"></select></div>
     <div class="hero-card" style="padding:16px 18px;margin-bottom:14px">
@@ -510,6 +476,7 @@ select option{background:#1a1829;}
 <div class="page" id="pageAyarlar">
   <div class="topbar"><div class="topbar-row"><div class="page-title">Ayarlar</div></div></div>
   <div class="page-inner">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px">Bütçe sınırları, düzenli ödemeler, hedefleriniz ve hesap ayarlarınız burada.</div>
 
     <!-- SEKMELİ YAPI -->
     <div class="tab-row" id="settingsTabRow" style="margin-bottom:16px">
@@ -523,7 +490,10 @@ select option{background:#1a1829;}
       <!-- Bütçe & Limitler -->
       <div class="ay-card" style="border-radius:16px;background:var(--card);border:1px solid var(--border);margin-bottom:10px;overflow:hidden">
         <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center">
-          <div style="font-size:14px;font-weight:600;color:var(--text)">📊 Kategori Limitleri</div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:var(--text)">📊 Kategori Limitleri</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">Bir kategoriye aylık harcama sınırı koyun</div>
+          </div>
           <button class="btn-ghost" style="padding:5px 11px;font-size:12px" onclick="openCatBudgetModal()">+ Ekle</button>
         </div>
         <div id="catBudgetList" style="padding:10px 16px"></div>
@@ -531,7 +501,10 @@ select option{background:#1a1829;}
       <!-- Tekrarlayan Giderler -->
       <div class="ay-card" style="border-radius:16px;background:var(--card);border:1px solid var(--border);margin-bottom:10px;overflow:hidden">
         <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center">
-          <div style="font-size:14px;font-weight:600;color:var(--text)">🔄 Tekrarlayan Giderler</div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:var(--text)">🔄 Tekrarlayan Giderler</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">Kira, fatura gibi her ay tekrar eden ödemeler otomatik eklensin</div>
+          </div>
           <button class="btn-ghost" style="padding:5px 11px;font-size:12px" onclick="openRecurModal('gider')">+ Ekle</button>
         </div>
         <div id="recurListGider" style="padding:10px 16px"></div>
@@ -539,7 +512,10 @@ select option{background:#1a1829;}
       <!-- Tekrarlayan Gelirler -->
       <div class="ay-card" style="border-radius:16px;background:var(--card);border:1px solid var(--border);margin-bottom:10px;overflow:hidden">
         <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center">
-          <div style="font-size:14px;font-weight:600;color:var(--text)">🔄 Tekrarlayan Gelirler</div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:var(--text)">🔄 Tekrarlayan Gelirler</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">Maaş gibi her ay düzenli gelen paralar otomatik eklensin</div>
+          </div>
           <button class="btn-ghost" style="padding:5px 11px;font-size:12px" onclick="openRecurModal('gelir')">+ Ekle</button>
         </div>
         <div id="recurListGelir" style="padding:10px 16px"></div>
@@ -547,7 +523,10 @@ select option{background:#1a1829;}
       <!-- Tasarruf -->
       <div class="ay-card" style="border-radius:16px;background:var(--card);border:1px solid var(--border);margin-bottom:10px;overflow:hidden">
         <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center">
-          <div style="font-size:14px;font-weight:600;color:var(--text)">🎯 Tasarruf Hedefleri</div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:var(--text)">🎯 Tasarruf Hedefleri</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">Bir hedef için ne kadar biriktirdiğinizi takip edin</div>
+          </div>
           <button class="btn-ghost" style="padding:5px 11px;font-size:12px" onclick="openGoalModal()">+ Ekle</button>
         </div>
         <div id="goalList" style="padding:10px 16px"></div>
@@ -555,7 +534,10 @@ select option{background:#1a1829;}
       <!-- Borç -->
       <div class="ay-card" style="border-radius:16px;background:var(--card);border:1px solid var(--border);margin-bottom:10px;overflow:hidden">
         <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center">
-          <div style="font-size:14px;font-weight:600;color:var(--text)">💳 Borç & Alacak</div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:var(--text)">💳 Borç & Alacak</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">Kime borcunuz var, kimden alacağınız var — not edin</div>
+          </div>
           <button class="btn-ghost" style="padding:5px 11px;font-size:12px" onclick="openDebtModal()">+ Ekle</button>
         </div>
         <div id="debtList" style="padding:10px 16px"></div>
@@ -704,47 +686,6 @@ select option{background:#1a1829;}
 
   </div>
 </div>
-<div class="overlay" id="invModal" onclick="closeModal('invModal')">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="modal-title" id="invModalTitle">💎 Varlık Ekle</div>
-    <div class="field" style="margin-top:12px">
-      <label>Yatırım Türü</label>
-      <select id="invType" onchange="onInvTypeChange()">
-        <option value="altin_gram">🥇 Gram Altın</option>
-        <option value="altin_ceyrek">🪙 Çeyrek Altın</option>
-        <option value="altin_yarim">🏅 Yarım Altın</option>
-        <option value="altin_tam">🎖️ Tam (Cumhuriyet) Altın</option>
-        <option value="usd">💵 Dolar (USD)</option>
-        <option value="eur">💶 Euro (EUR)</option>
-        <option value="gbp">💷 Sterlin (GBP)</option>
-        <option value="btc">₿ Bitcoin</option>
-        <option value="eth">Ξ Ethereum</option>
-        <option value="hisse">📈 Hisse Senedi</option>
-        <option value="diger_yat">📦 Diğer</option>
-      </select>
-    </div>
-    <div class="field" id="invNameField" style="display:none">
-      <label>İsim / Sembol</label>
-      <input type="text" id="invName" placeholder="ör. THYAO, AAPL"/>
-    </div>
-    <div id="invPriceHint" style="font-size:12px;margin-bottom:8px;min-height:18px"></div>
-    <div style="display:flex;gap:10px;margin-bottom:12px;">
-      <div class="field" style="flex:1;margin-bottom:0"><label>Miktar</label><input type="number" id="invQty" placeholder="ör. 10" min="0" step="any"/></div>
-      <div class="field" style="flex:1;margin-bottom:0"><label>Alış Fiyatı ₺</label><input type="number" id="invBuyPrice" placeholder="ör. 6800" min="0" step="any"/></div>
-    </div>
-    <div style="display:flex;gap:10px;margin-bottom:12px;">
-      <div class="field" style="flex:1;margin-bottom:0"><label>Alış Tarihi</label><input type="date" id="invDate"/></div>
-      <div class="field" style="flex:1;margin-bottom:0"><label>Not</label><input type="text" id="invNote" placeholder="opsiyonel"/></div>
-    </div>
-    <div id="invCostPreview" style="background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;display:none">
-      <span style="color:var(--muted)">Toplam Maliyet: </span><span style="font-family:'Playfair Display',serif;font-weight:700;color:var(--gold)" id="invCostVal">0 ₺</span>
-    </div>
-    <div class="modal-btns">
-      <button class="btn-ghost" onclick="closeModal('invModal')">İptal</button>
-      <button class="btn-gold" style="padding:12px" onclick="saveInvestment()">Kaydet</button>
-    </div>
-  </div>
-</div>
 <div id="toast"></div>
 <script>
 // ── KAYNAK / DEVTOOLS KORUMASI ──
@@ -785,6 +726,8 @@ const today=()=>new Date().toISOString().split('T')[0];
 const nowM=()=>{const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;};
 const prevM=ym=>{const[y,m]=ym.split('-').map(Number);return m===1?`${y-1}-12`:`${y}-${String(m-1).padStart(2,'0')}`;};
 const mLabel=ym=>{if(!ym)return'';const[y,m]=ym.split('-');return`${MN[parseInt(m)-1]} ${y}`;};
+// Ayın 1'inde girilen gelirler bir önceki ayın maaşı/geliri sayılır (ör. 1 Ağustos'ta girilen gelir Temmuz'a dahil edilir)
+const incMonth=d=>{if(!d)return'';const ym=d.slice(0,7);const day=parseInt(d.slice(8,10),10);return day===1?prevM(ym):ym;};
 const fmtD=d=>{if(!d)return'';const[y,m,dy]=d.split('-');return`${dy}.${m}.${y}`;};
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;').replace(/\//g,'&#x2F;');
 const catOf=id=>CATS.find(c=>c.id===id)||CATS[CATS.length-1];
@@ -1116,9 +1059,6 @@ async function startApp(){
     if(ce){ce.classList.add('show');ce.textContent='⚠️ '+err.message;}
   }
 
-  // Yatırımları çek
-  try{investments=await dbFetchInv();}catch(_){investments=[];}
-
   // Tüm verileri paralel çek — toplam 3 istek
   await Promise.allSettled([sbLoadAllSettings()]);
 
@@ -1154,17 +1094,9 @@ function setSettingsTab(tab){
 
 function goPage(p){curPage=p;document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));document.getElementById('page'+p.charAt(0).toUpperCase()+p.slice(1)).classList.add('active');document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));const nb=document.getElementById('nav-'+p);if(nb)nb.classList.add('active');if(p==='rapor')setTimeout(renderRapor,50);else if(p==='gelir')renderGelir();else if(p==='islemler'){renderList();}else if(p==='ayarlar'){setSettingsTab('planlama');}else render();}
 
-function setGelirTab(t){
-  document.getElementById('gtab-gelir').classList.toggle('active',t==='gelir');
-  document.getElementById('gtab-yatirim').classList.toggle('active',t==='yatirim');
-  document.getElementById('gTab-gelir').style.display=t==='gelir'?'block':'none';
-  document.getElementById('gTab-yatirim').style.display=t==='yatirim'?'block':'none';
-  if(t==='yatirim'){renderInvestments();if(!pricesLoaded)fetchLivePrices();}
-  else{renderGelir();}
-}
 // SELECTS
 function buildMonthSels(fm){
-  const months=[...new Set([...expenses,...incomes].map(e=>e.date?.slice(0,7)).filter(Boolean))].sort().reverse();
+  const months=[...new Set([...expenses.map(e=>e.date?.slice(0,7)),...incomes.map(i=>incMonth(i.date))].filter(Boolean))].sort().reverse();
   if(!months.includes(fm))months.unshift(fm);
   ['monthSel','monthSelGelir','monthSelRapor'].forEach(id=>{const s=document.getElementById(id);if(!s)return;const pv=s.value||fm;s.innerHTML='';const oAll=document.createElement('option');oAll.value='all';oAll.textContent='📅 Tüm Zamanlar';if(pv==='all')oAll.selected=true;s.appendChild(oAll);months.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=mLabel(m);if(m===(pv||fm))o.selected=true;s.appendChild(o);});});
   const ys=document.getElementById('yilSel');if(ys){const yrs=[...new Set(expenses.map(e=>e.date?.slice(0,4)).filter(Boolean))].sort().reverse();const ny=String(new Date().getFullYear());if(!yrs.includes(ny))yrs.unshift(ny);const py=ys.value||ny;ys.innerHTML='';yrs.forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y;if(y===py)o.selected=true;ys.appendChild(o);});}
@@ -1269,8 +1201,18 @@ function render(){
   if(fm==='all'){const sEl=document.getElementById('monthSel');if(sEl)sEl.value='all';}
   updateMonthLabel();
   const allMode=fm==='all';
-  const allExp=allMode?expenses.filter(e=>e.date&&e.date<=today()):expenses.filter(e=>e.date?.startsWith(fm));const allInc=allMode?incomes.filter(i=>i.date&&i.date<=today()):incomes.filter(i=>i.date?.startsWith(fm));
+  const allExp=allMode?expenses.filter(e=>e.date&&e.date<=today()):expenses.filter(e=>e.date?.startsWith(fm));const allInc=allMode?incomes.filter(i=>i.date&&i.date<=today()):incomes.filter(i=>incMonth(i.date)===fm);
   const tExp=allExp.reduce((s,e)=>s+e.amount,0);const tInc=allInc.reduce((s,i)=>s+i.amount,0);
+
+  // Tüm zamanlar özeti (seçili aydan bağımsız, her zaman bugüne kadarki tüm veriler)
+  const atExpArr=expenses.filter(e=>e.date&&e.date<=today());const atIncArr=incomes.filter(i=>i.date&&i.date<=today());
+  const atTExp=atExpArr.reduce((s,e)=>s+e.amount,0);const atTInc=atIncArr.reduce((s,i)=>s+i.amount,0);
+  const atMasrafGelir=atIncArr.filter(i=>i.category==='masraf_iade_gelir').reduce((s,i)=>s+i.amount,0);
+  const atMasrafGider=atExpArr.filter(e=>e.category==='masraf_iadesi').reduce((s,e)=>s+e.amount,0);
+  const atKisiselExp=Math.max(atTExp-atMasrafGelir,0);const atKisiselInc=atTInc-atMasrafGelir;const atNet=atKisiselInc-atKisiselExp;
+  document.getElementById('atInc').textContent=fmtTL(atKisiselInc);
+  document.getElementById('atExp').textContent=fmtTL(atKisiselExp);
+  const atNetEl=document.getElementById('atNet');atNetEl.textContent=(atNet>=0?'+':'')+fmtTL(atNet);atNetEl.style.color=atNet>0?'#3aaa6e':atNet<0?'#e05c7a':'var(--text)';
 
   // Masraf İadesi mantığı:
   // Şirket adına yapılan harcama hangi kategoride olursa olsun,
@@ -1383,9 +1325,9 @@ function renderGelir(){
   const fm=document.getElementById('monthSelGelir')?.value||nowM();buildMonthSels(fm==='all'?nowM():fm);
   const allMode=fm==='all';
   if(allMode){const sEl=document.getElementById('monthSelGelir');if(sEl)sEl.value='all';}
-  const data=allMode?incomes.slice():incomes.filter(i=>i.date?.startsWith(fm));const total=data.reduce((s,i)=>s+i.amount,0);
+  const data=allMode?incomes.slice():incomes.filter(i=>incMonth(i.date)===fm);const total=data.reduce((s,i)=>s+i.amount,0);
   document.getElementById('gelirTotal').textContent=fmtTL(total);document.getElementById('gelirCount').textContent=data.length+' kayıt';
-  const pv=allMode?0:incomes.filter(i=>i.date?.startsWith(prevM(fm))).reduce((s,i)=>s+i.amount,0);const diff=(!allMode&&pv>0)?((total-pv)/pv*100).toFixed(0):null;
+  const pv=allMode?0:incomes.filter(i=>incMonth(i.date)===prevM(fm)).reduce((s,i)=>s+i.amount,0);const diff=(!allMode&&pv>0)?((total-pv)/pv*100).toFixed(0):null;
   document.getElementById('gelirStats').innerHTML=[{i:'💰',v:fmtTL(total),l:'Toplam Gelir'},{i:'🧾',v:data.length+' adet',l:'İşlem'},{i:'📐',v:data.length?fmtTL(total/data.length):'—',l:'Ortalama'},{i:diff!==null?(parseFloat(diff)>0?'📈':'📉'):'📊',v:diff!==null?`%${Math.abs(diff)}`:'—',l:allMode?'Tüm Zamanlar':'Geçen Aya'}].map(s=>`<div class="stat-card"><div class="stat-icon">${s.i}</div><div class="stat-val" style="color:#3aaa6e">${s.v}</div><div class="stat-lbl">${s.l}</div></div>`).join('');
   const cel=document.getElementById('gelirCatBars');cel.innerHTML='';Object.entries(INC_CATS).forEach(([id,c])=>{const t=data.filter(i=>i.category===id).reduce((s,i)=>s+i.amount,0);if(!t)return;const pct=total?(t/total*100).toFixed(1):0;const row=document.createElement('div');row.className='cat-row';row.innerHTML=`<div class="cat-row-top"><span class="cat-row-name">${c.i} ${c.l}</span><span class="cat-row-amt" style="color:${c.c}">${fmtTL(t)}</span></div><div class="bar-bg"><div class="bar-fill" style="background:${c.c};width:0%" data-w="${pct}"></div></div><div class="cat-pct">%${pct}</div>`;cel.appendChild(row);});requestAnimationFrame(()=>cel.querySelectorAll('.bar-fill').forEach(b=>b.style.width=b.dataset.w+'%'));
   const lel=document.getElementById('gelirList');lel.innerHTML='';if(!data.length){lel.innerHTML=`<div class="empty"><div class="ico">💰</div><p>${allMode?'Henüz hiç gelir girilmemiş.':'Bu ay henüz gelir girilmemiş.'}</p></div>`;return;}
@@ -1569,7 +1511,7 @@ function saveCatBudget(){const cat=document.getElementById('cbCat').value;const 
 function removeCatBudget(catId){delete catBudgets[catId];sbSaveCatBudgets();renderCatBudgets();}
 function renderDayOfWeek(){const el=document.getElementById('dayOfWeekChart');el.innerHTML='';const dt=Array(7).fill(0),dc=Array(7).fill(0);expenses.forEach(e=>{if(!e.date)return;const d=new Date(e.date+'T00:00:00');dt[d.getDay()]+=e.amount;dc[d.getDay()]++;});const maxT=Math.max(...dt,1);dt.forEach((t,i)=>{if(!t)return;const pct=(t/maxT*100).toFixed(0);const row=document.createElement('div');row.className='cat-row';row.innerHTML=`<div class="cat-row-top"><span class="cat-row-name">${DAYS_TR[i]}</span><span class="cat-row-amt" style="color:var(--gold)">${fmtTL(t)}</span></div><div class="bar-bg"><div class="bar-fill" style="background:rgba(245,166,35,0.6);width:0%" data-w="${pct}"></div></div><div class="cat-pct">${dc[i]} işlem · Ort. ${fmtTL(t/dc[i])}</div>`;el.appendChild(row);});if(!dt.some(t=>t>0))el.innerHTML='<p style="font-size:12px;color:var(--muted2);text-align:center;padding:10px">Veri yok</p>';requestAnimationFrame(()=>el.querySelectorAll('.bar-fill').forEach(b=>b.style.width=b.dataset.w+'%'));}
 function setRaporTab(t){raporTabState=t;document.querySelectorAll('.rprt-tab').forEach(b=>b.classList.remove('active'));document.getElementById('rtab-'+t).classList.add('active');document.getElementById('raporAyFilter').style.display=t==='ay'?'flex':'none';document.getElementById('raporYilFilter').style.display=t==='yil'?'flex':'none';document.getElementById('karCard').style.display=t==='kar'?'block':'none';document.getElementById('pieCard').style.display=t==='kar'?'none':'block';renderRapor();}
-function buildRaporSels(){const ms=document.getElementById('monthSelRapor');const months=[...new Set([...expenses,...incomes].map(e=>e.date?.slice(0,7)).filter(Boolean))].sort().reverse();const nm=nowM();if(!months.includes(nm))months.unshift(nm);const pv=ms.value||nm;ms.innerHTML='';const oAll=document.createElement('option');oAll.value='all';oAll.textContent='📅 Tüm Zamanlar';if(pv==='all')oAll.selected=true;ms.appendChild(oAll);months.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=mLabel(m);if(m===pv)o.selected=true;ms.appendChild(o);});const ys=document.getElementById('yilSel');const yrs=[...new Set(expenses.map(e=>e.date?.slice(0,4)).filter(Boolean))].sort().reverse();const ny=String(new Date().getFullYear());if(!yrs.includes(ny))yrs.unshift(ny);const py=ys.value||ny;ys.innerHTML='';yrs.forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y;if(y===py)o.selected=true;ys.appendChild(o);});}
+function buildRaporSels(){const ms=document.getElementById('monthSelRapor');const months=[...new Set([...expenses.map(e=>e.date?.slice(0,7)),...incomes.map(i=>incMonth(i.date))].filter(Boolean))].sort().reverse();const nm=nowM();if(!months.includes(nm))months.unshift(nm);const pv=ms.value||nm;ms.innerHTML='';const oAll=document.createElement('option');oAll.value='all';oAll.textContent='📅 Tüm Zamanlar';if(pv==='all')oAll.selected=true;ms.appendChild(oAll);months.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=mLabel(m);if(m===pv)o.selected=true;ms.appendChild(o);});const ys=document.getElementById('yilSel');const yrs=[...new Set(expenses.map(e=>e.date?.slice(0,4)).filter(Boolean))].sort().reverse();const ny=String(new Date().getFullYear());if(!yrs.includes(ny))yrs.unshift(ny);const py=ys.value||ny;ys.innerHTML='';yrs.forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y;if(y===py)o.selected=true;ys.appendChild(o);});}
 function renderRapor(){buildRaporSels();if(raporTabState==='kar')renderKarRapor();else if(raporTabState==='yil')renderRaporYil();else renderRaporAy();}
 function renderRaporAy(){
   const fm=document.getElementById('monthSelRapor').value||nowM();
@@ -1598,7 +1540,7 @@ function renderRaporAy(){
   drawBar(labels,values);renderRCatList(data,total);
 }
 function renderRaporYil(){const yr=document.getElementById('yilSel').value||String(new Date().getFullYear());const rawData=expenses.filter(e=>e.date?.startsWith(yr));const data=rawData.filter(e=>e.category!=='masraf_iadesi');const total=data.reduce((s,e)=>s+e.amount,0);document.getElementById('raporPeriodLbl').textContent=yr+' Yılı';document.getElementById('raporTotal').textContent=fmtTL(total);document.getElementById('raporTotal').style.color='var(--gold)';document.getElementById('raporSubLbl').textContent=data.length+' işlem';document.getElementById('barChartTitle').textContent='Aylık Harcamalar';drawPie(data,total);const labels=MN.map(m=>m.slice(0,3));const values=MN.map((_,i)=>data.filter(e=>e.date?.startsWith(`${yr}-${String(i+1).padStart(2,'0')}`)).reduce((s,e)=>s+e.amount,0));drawBar(labels,values);renderRCatList(data,total);}
-function renderKarRapor(){const months=[];for(let i=5;i>=0;i--){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);months.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`);}const eT=months.map(m=>expenses.filter(e=>e.date?.startsWith(m)).reduce((s,e)=>s+e.amount,0));const iT=months.map(m=>incomes.filter(i=>i.date?.startsWith(m)).reduce((s,i)=>s+i.amount,0));const tI=iT.reduce((a,b)=>a+b,0),tE=eT.reduce((a,b)=>a+b,0),net=tI-tE;document.getElementById('raporPeriodLbl').textContent='Son 6 Ay';document.getElementById('raporTotal').textContent=fmtTL(Math.abs(net));document.getElementById('raporTotal').style.color=net>=0?'#3aaa6e':'#e05c7a';document.getElementById('raporSubLbl').textContent=`Gelir: ${fmtTL(tI)} · Gider: ${fmtTL(tE)}`;document.getElementById('barChartTitle').textContent='';drawKarBar(months,iT,eT);renderRCatList(expenses,tE);}
+function renderKarRapor(){const months=[];for(let i=5;i>=0;i--){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);months.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`);}const eT=months.map(m=>expenses.filter(e=>e.date?.startsWith(m)).reduce((s,e)=>s+e.amount,0));const iT=months.map(m=>incomes.filter(i=>incMonth(i.date)===m).reduce((s,i)=>s+i.amount,0));const tI=iT.reduce((a,b)=>a+b,0),tE=eT.reduce((a,b)=>a+b,0),net=tI-tE;document.getElementById('raporPeriodLbl').textContent='Son 6 Ay';document.getElementById('raporTotal').textContent=fmtTL(Math.abs(net));document.getElementById('raporTotal').style.color=net>=0?'#3aaa6e':'#e05c7a';document.getElementById('raporSubLbl').textContent=`Gelir: ${fmtTL(tI)} · Gider: ${fmtTL(tE)}`;document.getElementById('barChartTitle').textContent='';drawKarBar(months,iT,eT);renderRCatList(expenses,tE);}
 function drawPie(data,total){
   const canvas=document.getElementById('pieCanvas'),ctx=canvas.getContext('2d');
   const cx=100,cy=100,R=88,r=52;ctx.clearRect(0,0,200,200);
@@ -1770,382 +1712,11 @@ function sync(on){document.getElementById('syncDot').classList.toggle('on',on);}
 function showInsight(icon,html){document.getElementById('insightCard').style.display='flex';document.getElementById('insightIcon').textContent=icon;document.getElementById('insightText').innerHTML=html;}
 let toastT;
 function showToast(msg,type='success'){const c={success:{bg:'#1a2e1a',b:'#3aaa6e',t:'#80ddaa'},error:{bg:'#2e1a1a',b:'#cc4444',t:'#ff8888'},info:{bg:'#1a1a2e',b:'#4466cc',t:'#88aaff'}}[type];const el=document.getElementById('toast');el.textContent=msg;el.style.cssText+=`;background:${c.bg};border:1px solid ${c.b};color:${c.t}`;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2600);}
-// ══ YATIRIM ══
-const INV_TYPES={
-  altin_gram: {n:'Gram Altın',    i:'🥇', pk:'altin_gram', mult:1},
-  altin_ceyrek:{n:'Çeyrek Altın', i:'🪙', pk:'altin_ceyrek',mult:1},
-  altin_yarim: {n:'Yarım Altın',  i:'🏅', pk:'altin_yarim', mult:1},
-  altin_tam:   {n:'Tam Altın',    i:'🎖️', pk:'altin_tam',   mult:1},
-  altin_cumhur:{n:'Cumhuriyet',   i:'🏆', pk:'altin_cumhur',mult:1},
-  gumus:       {n:'Gümüş (gr)',   i:'🥈', pk:'gumus',       mult:1},
-  usd:         {n:'Dolar (USD)',  i:'💵', pk:'usd',          mult:1},
-  eur:         {n:'Euro (EUR)',   i:'💶', pk:'eur',          mult:1},
-  gbp:         {n:'Sterlin',     i:'💷', pk:'gbp',          mult:1},
-  btc:         {n:'Bitcoin',     i:'₿',  pk:'btc',          mult:1},
-  eth:         {n:'Ethereum',    i:'Ξ',  pk:'eth',          mult:1},
-  hisse:       {n:'Hisse Senedi',i:'📈', pk:'manual',       mult:1},
-  diger_yat:   {n:'Diğer',       i:'📦', pk:'manual',       mult:1},
-};
-
-// Her enstrüman için hem ALIŞ hem SATIŞ fiyatı tutulur
-// ALIŞ = piyasanın senden aldığı fiyat (düşük), SATIŞ = piyasanın sana sattığı fiyat (yüksek)
-let livePrices={}, editInvId=null, pricesLoaded=false;
-let investments=[];
-
-function initPrices(){
-  ['altin_gram','altin_ceyrek','altin_yarim','altin_tam','altin_cumhur','gumus','usd','eur','gbp','btc','eth'].forEach(k=>{
-    livePrices[k]={alis:0,satis:0};
-  });
-}
-initPrices();
-
-async function dbFetchInv(){const{data,error:dbErr}=await sb.from('investments').select('*').order('buy_date',{ascending:false});if(dbErr)throw new Error('İşlem başarısız');return data||[];}
-async function dbInsertInv2(o){const{data,error:dbErr}=await sb.from('investments').insert([o]).select();if(dbErr)throw new Error('İşlem başarısız');if(!data||!data[0])throw new Error('Yatırım kaydı dönmedi');return data[0];}
-async function dbUpdateInv2(id,o){const{error}=await sb.from('investments').update(o).eq('id',id);if(error)throw error;}
-async function dbDeleteInv2(id){const{error}=await sb.from('investments').delete().eq('id',id);if(error)throw error;}
-
-async function fetchLivePrices(){
-  const btn=document.getElementById('refreshBtn');
-  if(btn){btn.textContent='⏳ Güncelleniyor…';btn.style.opacity='.6';}
-  let ok=false;
-
-  // Basit fetch — cache buster ile
-  async function jFetch(url){
-    const r=await fetch(url+'?_='+Date.now(),{cache:'no-store',mode:'cors'});
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    return r.json();
-  }
-
-  // ── 1) fawazahmed0 currency CDN — tam CORS açık, npm CDN üzerinden ──
-  let usdTry=0;
-  try{
-    // Önce USD/TRY
-    const fx=await jFetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json');
-    if(fx?.usd?.try){
-      usdTry=fx.usd.try;
-      const eurUsd=fx.usd.eur||0, gbpUsd=fx.usd.gbp||0;
-      livePrices.usd.alis  = usdTry*0.9970; livePrices.usd.satis = usdTry*1.0030;
-      if(eurUsd>0){const e=usdTry/eurUsd; livePrices.eur.alis=e*0.997; livePrices.eur.satis=e*1.003;}
-      if(gbpUsd>0){const g=usdTry/gbpUsd; livePrices.gbp.alis=g*0.997; livePrices.gbp.satis=g*1.003;}
-
-      // XAU gram TRY
-      const xauOz=fx.usd.xau||0;  // 1 USD = xauOz troy oz
-      if(xauOz>0){
-        const grTry=(1/xauOz)/31.1035*usdTry;
-        livePrices.altin_gram.alis    = Math.round(grTry*0.978*100)/100;
-        livePrices.altin_gram.satis   = Math.round(grTry*1.022*100)/100;
-        livePrices.altin_ceyrek.alis  = Math.round(grTry*1.750*0.978*100)/100;
-        livePrices.altin_ceyrek.satis = Math.round(grTry*1.750*1.022*100)/100;
-        livePrices.altin_yarim.alis   = Math.round(grTry*3.500*0.978*100)/100;
-        livePrices.altin_yarim.satis  = Math.round(grTry*3.500*1.022*100)/100;
-        livePrices.altin_tam.alis     = Math.round(grTry*7.000*0.978*100)/100;
-        livePrices.altin_tam.satis    = Math.round(grTry*7.000*1.022*100)/100;
-        livePrices.altin_cumhur.alis  = Math.round(grTry*7.216*0.978*100)/100;
-        livePrices.altin_cumhur.satis = Math.round(grTry*7.216*1.022*100)/100;
-        ok=true;
-      }
-      // XAG gümüş
-      const xagOz=fx.usd.xag||0;
-      if(xagOz>0){
-        const agTry=(1/xagOz)/31.1035*usdTry;
-        livePrices.gumus.alis  = Math.round(agTry*0.975*100)/100;
-        livePrices.gumus.satis = Math.round(agTry*1.025*100)/100;
-      }
-      // BTC / ETH
-      const btcUsd=fx.usd.btc||0, ethUsd=fx.usd.eth||0;
-      if(btcUsd>0){const m=(1/btcUsd)*usdTry;livePrices.btc.alis=Math.round(m*0.998);livePrices.btc.satis=Math.round(m*1.002);}
-      if(ethUsd>0){const m=(1/ethUsd)*usdTry;livePrices.eth.alis=Math.round(m*0.998);livePrices.eth.satis=Math.round(m*1.002);}
-    }
-  }catch(_1){}
-
-  // ── 2) Fallback: exchangerate-api (ücretsiz key gerektirmez) ──
-  if(!ok){
-    try{
-      const r2=await jFetch('https://api.exchangerate-api.com/v4/latest/USD');
-      if(r2?.rates?.TRY){
-        usdTry=r2.rates.TRY;
-        livePrices.usd.alis=usdTry*0.997; livePrices.usd.satis=usdTry*1.003;
-        if(r2.rates.EUR){const e=usdTry/r2.rates.EUR;livePrices.eur.alis=e*0.997;livePrices.eur.satis=e*1.003;}
-        if(r2.rates.GBP){const g=usdTry/r2.rates.GBP;livePrices.gbp.alis=g*0.997;livePrices.gbp.satis=g*1.003;}
-        ok=true; // en azından döviz geldi
-      }
-    }catch(_2){}
-  }
-
-  pricesLoaded=ok;
-  
-  updatePriceDisplay();
-  renderInvestments();
-  const now2=new Date();
-  const ts=now2.getHours()+':'+String(now2.getMinutes()).padStart(2,'0');
-  const pte=document.getElementById('priceUpdateTime');
-  if(pte)pte.textContent=ok?('Son güncelleme: '+ts):'Fiyat alınamadı';
-  if(ok)showToast('Fiyatlar güncellendi ✓');
-  else showToast('Fiyat alınamadı — internet bağlantınızı kontrol edin.','error');
-  if(btn){btn.textContent='↻ Fiyat Güncelle';btn.style.opacity='1';}
-}
-
-function loadCachedPrices(){return false;} // Supabase-only: fiyat cache yok
-
-function updatePriceDisplay(){
-  const fmtP=n=>n>0?new Intl.NumberFormat('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)+' ₺':'—';
-  const els={'price-gold':livePrices.altin_gram.alis,'price-usd':livePrices.usd.alis,'price-eur':livePrices.eur.alis,'price-gbp':livePrices.gbp.alis,'price-btc':livePrices.btc.alis};
-  Object.entries(els).forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.textContent=fmtP(val);});
-  const tbl=document.getElementById('priceTable');
-  if(!tbl)return;
-  const rows=[
-    {n:'Gram Altın',  i:'🥇',k:'altin_gram'},
-    {n:'Çeyrek Altın',i:'🪙',k:'altin_ceyrek'},
-    {n:'Yarım Altın', i:'🏅',k:'altin_yarim'},
-    {n:'Tam Altın',   i:'🎖️',k:'altin_tam'},
-    {n:'Cumhuriyet',  i:'🏆',k:'altin_cumhur'},
-    {n:'Gümüş (gr)',  i:'🥈',k:'gumus'},
-    {n:'Dolar',       i:'💵',k:'usd'},
-    {n:'Euro',        i:'💶',k:'eur'},
-    {n:'Sterlin',     i:'💷',k:'gbp'},
-    {n:'Bitcoin',     i:'₿', k:'btc'},
-    {n:'Ethereum',    i:'Ξ', k:'eth'},
-  ];
-  tbl.style.cssText='border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden;';
-  tbl.innerHTML='';
-  // Header row
-  // Excel-style tablo
-  tbl.style.cssText='border:1px solid rgba(245,166,35,0.25);border-radius:10px;overflow:hidden;';
-  tbl.innerHTML='';
-
-  tbl.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:8px;';
-  tbl.innerHTML='';
-
-  rows.forEach(r=>{
-    const p=livePrices[r.k]||{alis:0,satis:0};
-    if(!p.alis&&!p.satis)return;
-    const card=document.createElement('div');
-    card.style.cssText='background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:10px 12px;';
-    card.innerHTML=`
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:7px">
-        <span style="font-size:18px">${r.i}</span>
-        <span style="font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.n}</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(58,170,110,0.08);border-radius:6px;padding:4px 7px;margin-bottom:4px">
-        <span style="font-size:9px;color:#3aaa6e;font-weight:600;text-transform:uppercase">Alış</span>
-        <span style="font-size:11px;font-weight:700;color:#3aaa6e;font-variant-numeric:tabular-nums">${fmtP(p.alis)}</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(224,92,122,0.08);border-radius:6px;padding:4px 7px">
-        <span style="font-size:9px;color:#e05c7a;font-weight:600;text-transform:uppercase">Satış</span>
-        <span style="font-size:11px;font-weight:700;color:#e05c7a;font-variant-numeric:tabular-nums">${fmtP(p.satis)}</span>
-      </div>`;
-    tbl.appendChild(card);
-  });
-}
-
-// Piyasa kuralı:
-// Alırken: SATIŞ fiyatı ödenir (maliyet = miktar × alış_satiş_fiyati)
-// Satarken: ALIŞ fiyatı alınır (güncel = miktar × guncel_alis_fiyati)
-// Kar/Zarar = güncel_değer - maliyet
-function getAlisFiyati(type){return livePrices[type]?.alis||0;}   // satarken alacağın
-function getSatisFiyati(type){return livePrices[type]?.satis||0;} // alırken ödeyeceğin
-
-async function renderInvestments(){
-  if(!investments.length){try{investments=await dbFetchInv();}catch(_){investments=[];}}
-  const el=document.getElementById('invList');
-  let totalCost=0,totalVal=0;
-  el.innerHTML='';
-
-  if(!investments.length){
-    el.innerHTML='<div class="empty"><div class="ico">💎</div><p>Henüz varlık eklenmemiş.<br>Varlık Ekle butonuna basın.</p></div>';
-    ['portTotal','portCost','portPL','portPLPct'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='0 ₺';});
-    return;
-  }
-
-  investments.forEach(inv=>{
-    const t=INV_TYPES[inv.type]||{n:inv.name||'Diğer',i:'📦'};
-    // Güncel değer: satarken ALIŞ fiyatından hesaplanır
-    const curAlis=getAlisFiyati(inv.type);
-    // Maliyet: kullanıcının girdiği alış fiyatı (satın aldığında ödediği SATIŞ fiyatı)
-    const cost=inv.quantity*inv.buy_price;
-    const curVal=curAlis>0?inv.quantity*curAlis:0;
-    const pl=curAlis>0?curVal-cost:0;
-    const plPct=cost>0&&curAlis>0?(pl/cost*100):0;
-
-    totalCost+=cost;
-    if(curAlis>0)totalVal+=curVal;
-    else totalVal+=cost;
-
-    const isUp=pl>=0;
-    const hasPrice=curAlis>0;
-    const plColor=isUp?'#3aaa6e':'#e05c7a';
-    const div=document.createElement('div');
-    div.style.cssText=`border-radius:16px;background:rgba(255,255,255,0.025);border:1px solid ${hasPrice?(isUp?'rgba(58,170,110,0.18)':'rgba(224,92,122,0.18)'):'rgba(255,255,255,0.06)'};margin-bottom:10px;overflow:hidden;`;
-
-    div.innerHTML=`
-      <!-- ÜSTTE: İsim + Güncel Değer + Kar/Zarar -->
-      <div style="display:flex;align-items:center;gap:10px;padding:14px 14px 10px;">
-        <div style="width:44px;height:44px;border-radius:12px;background:${hasPrice?(isUp?'rgba(58,170,110,0.12)':'rgba(224,92,122,0.12)'):'rgba(100,100,100,0.08)'};display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0">${t.i}</div>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:14px;font-weight:600;color:var(--text)">${t.n}${inv.name&&inv.name!==t.n?' — '+esc(inv.name):''}</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:1px">${fmtN(inv.quantity)} adet · Alış: ${fmtTL(inv.buy_price)}</div>
-        </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:${hasPrice?'var(--text)':'var(--muted)'}">${hasPrice?fmtTL(curVal):'Fiyat yükle'}</div>
-          ${hasPrice?`<div style="font-size:12px;font-weight:700;color:${plColor};margin-top:3px">${isUp?'▲':' ▼'} ${fmtTL(Math.abs(pl))}</div>`:''}
-        </div>
-      </div>
-
-      <!-- KAR/ZARAR DETAY BÖLÜMÜ -->
-      ${hasPrice?`
-      <div style="margin:0 14px;background:${isUp?'rgba(58,170,110,0.08)':'rgba(224,92,122,0.08)'};border:1px solid ${isUp?'rgba(58,170,110,0.2)':'rgba(224,92,122,0.2)'};border-radius:10px;padding:10px 14px;margin-bottom:12px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-          <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">Kar / Zarar</span>
-          <span style="font-size:14px;font-weight:700;color:${plColor}">${isUp?'+':''}${fmtTL(pl)}</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:11px;color:var(--muted)">Değişim</span>
-          <span style="font-size:13px;font-weight:700;color:${plColor}">${isUp?'+':''}${plPct.toFixed(2)}%</span>
-        </div>
-        <div style="height:5px;background:rgba(255,255,255,0.06);border-radius:3px;margin-top:8px;overflow:hidden;">
-          <div style="height:100%;background:${plColor};width:${Math.min(Math.abs(plPct)*2,100)}%;border-radius:3px;transition:width .7s;"></div>
-        </div>
-      </div>`:''}
-
-      <!-- ALT: MALİYET / GÜNCEL ALIŞ / GÜNCEL SATIŞ -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid rgba(255,255,255,0.05);">
-        <div style="padding:9px 0;text-align:center;border-right:1px solid rgba(255,255,255,0.05);">
-          <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px">Maliyet</div>
-          <div style="font-size:11px;font-weight:600;color:var(--text)">${fmtTL(inv.buy_price)}</div>
-          <div style="font-size:10px;color:var(--muted2);margin-top:1px">${fmtTL(cost)}</div>
-        </div>
-        <div style="padding:9px 0;text-align:center;border-right:1px solid rgba(255,255,255,0.05);">
-          <div style="font-size:9px;color:#3aaa6e;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px">Alış (güncel)</div>
-          <div style="font-size:11px;font-weight:600;color:#3aaa6e">${hasPrice?fmtTL(curAlis):'—'}</div>
-          <div style="font-size:10px;color:var(--muted2);margin-top:1px">Satarken</div>
-        </div>
-        <div style="padding:9px 0;text-align:center;">
-          <div style="font-size:9px;color:#e05c7a;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px">Satış (güncel)</div>
-          <div style="font-size:11px;font-weight:600;color:#e05c7a">${getSatisFiyati(inv.type)>0?fmtTL(getSatisFiyati(inv.type)):'—'}</div>
-          <div style="font-size:10px;color:var(--muted2);margin-top:1px">Alırken</div>
-        </div>
-      </div>
-      <div style="display:flex;justify-content:flex-end;gap:6px;padding:8px 12px;border-top:1px solid rgba(255,255,255,0.04);">
-        <button class="btn-sm-edit" onclick="editInv(${inv.id})">✏️ Düzenle</button>
-        <button class="btn-sm-del" onclick="askDelInv(${inv.id})">🗑 Sil</button>
-      </div>`;
-    el.appendChild(div);
-  });
-
-  const totalPL=totalVal-totalCost;const totalPct=totalCost>0?(totalPL/totalCost*100):0;
-  document.getElementById('portTotal').textContent=fmtTL(totalVal);
-  document.getElementById('portCost').textContent=fmtTL(totalCost);
-  document.getElementById('portPL').textContent=(totalPL>=0?'+':'')+fmtTL(totalPL);
-  document.getElementById('portPL').style.color=totalPL>=0?'#3aaa6e':'#e05c7a';
-  document.getElementById('portPLPct').textContent=(totalPL>=0?'+':'')+totalPct.toFixed(1)+'%';
-  document.getElementById('portPLPct').style.color=totalPL>=0?'#3aaa6e':'#e05c7a';
-}
-
-function fmtN(n){return Number.isInteger(n)?n:parseFloat(n.toFixed(4));}
-
-function openInvModal(){
-  editInvId=null;
-  document.getElementById('invModalTitle').textContent='💎 Varlık Ekle';
-  document.getElementById('invType').value='altin_gram';
-  document.getElementById('invQty').value='';
-  document.getElementById('invBuyPrice').value='';
-  document.getElementById('invDate').value=today();
-  document.getElementById('invNote').value='';
-  onInvTypeChange();
-  document.getElementById('invModal').classList.add('show');
-}
-
-function onInvTypeChange(){
-  const type=document.getElementById('invType').value;
-  const nf=document.getElementById('invNameField');
-  nf.style.display=(type==='hisse'||type==='diger_yat')?'block':'none';
-
-  // Otomatik SATIŞ fiyatını öner (alırken SATIŞ ödersin)
-  const sp=getSatisFiyati(type);
-  const ap=getAlisFiyati(type);
-  const priceHint=document.getElementById('invPriceHint');
-
-  if(sp>0){
-    const fmt=n=>new Intl.NumberFormat('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n);
-    if(priceHint)priceHint.innerHTML=`<span style="color:#3aaa6e">Alış: ${fmt(ap)} ₺</span> &nbsp; <span style="color:#e05c7a">Satış: ${fmt(sp)} ₺</span> <span style="color:var(--muted);font-size:10px">(alırken satış ödersin)</span>`;
-    if(!document.getElementById('invBuyPrice').value){
-      document.getElementById('invBuyPrice').value=sp.toFixed(2);
-    }
-  }else{
-    if(priceHint)priceHint.innerHTML='<span style="color:var(--muted);font-size:11px">Fiyat yüklenemedi, manuel girin</span>';
-  }
-  updateCostPreview();
-}
-
-function updateCostPreview(){
-  const qty=parseFloat(document.getElementById('invQty').value)||0;
-  const price=parseFloat(document.getElementById('invBuyPrice').value)||0;
-  const total=qty*price;
-  const prev=document.getElementById('invCostPreview');
-  if(qty>0&&price>0){prev.style.display='block';document.getElementById('invCostVal').textContent=fmtTL(total);}
-  else prev.style.display='none';
-}
-
-document.addEventListener('DOMContentLoaded',()=>{
-  ['invQty','invBuyPrice'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('input',updateCostPreview);});
-});
-
-async function saveInvestment(){
-  const type=document.getElementById('invType').value;
-  const qty=parseFloat(document.getElementById('invQty').value);
-  const buyPrice=parseFloat(document.getElementById('invBuyPrice').value);
-  const date=document.getElementById('invDate').value;
-  const note=document.getElementById('invNote').value.trim();
-  const t=INV_TYPES[type];
-  let name=t?t.n:'Diğer';
-  if(type==='hisse'||type==='diger_yat'){name=document.getElementById('invName').value.trim()||name;}
-  if(isNaN(qty)||qty<=0||isNaN(buyPrice)||buyPrice<=0){showToast('Miktar ve alış fiyatı giriniz.','error');return;}
-  if(!date){showToast('Tarih seçiniz.','error');return;}
-  sync(true);
-  try{
-    if(editInvId){
-      await dbUpdateInv2(editInvId,{type,name,quantity:qty,buy_price:buyPrice,buy_date:date,note});
-      investments=investments.map(i=>i.id===editInvId?{...i,type,name,quantity:qty,buy_price:buyPrice,buy_date:date,note}:i);
-      showToast('Güncellendi ✓');
-    }else{
-      const saved=await dbInsertInv2({type,name,quantity:qty,buy_price:buyPrice,buy_date:date,note});
-      investments.unshift(saved);
-      showToast('Varlık eklendi ✓');
-    }
-    closeModal('invModal');renderInvestments();
-  }catch(err){showToast('İşlem başarısız.','error');}
-  sync(false);
-}
-
-function editInv(id){
-  const inv=investments.find(i=>i.id===id);if(!inv)return;
-  editInvId=id;
-  document.getElementById('invModalTitle').textContent='✏️ Varlık Düzenle';
-  document.getElementById('invType').value=inv.type;
-  document.getElementById('invName').value=inv.name||'';
-  document.getElementById('invQty').value=inv.quantity;
-  document.getElementById('invBuyPrice').value=inv.buy_price;
-  document.getElementById('invDate').value=inv.buy_date;
-  document.getElementById('invNote').value=inv.note||'';
-  onInvTypeChange();
-  document.getElementById('invModal').classList.add('show');
-}
-
-let pendingDelInv=null;
-function askDelInv(id){pendingDelInv=id;document.getElementById('delModal').classList.add('show');}
-
 async function confirmDelete(){
-  if(pendingDelInv){
-    sync(true);
-    try{await dbDeleteInv2(pendingDelInv);investments=investments.filter(i=>i.id!==pendingDelInv);renderInvestments();showToast('Silindi.','info');}
-    catch(err){showToast('Silinemedi.','error');}
-    closeModal('delModal');pendingDelInv=null;sync(false);
-  }else{
-    if(!pendingDel)return;sync(true);
-    try{if(pendingDelType==='exp'){await dbDE(pendingDel);expenses=expenses.filter(e=>e.id!==pendingDel);}else{await dbDI(pendingDel);incomes=incomes.filter(i=>i.id!==pendingDel);}if(editId===pendingDel)cancelEdit();cacheData();render();renderGelir();showToast('Silindi.','info');if(navigator.vibrate)navigator.vibrate([30,20,30]);}
-    catch(err){showToast('Silinemedi.','error');}
-    closeModal('delModal');pendingDel=null;pendingDelType=null;sync(false);
-  }
+  if(!pendingDel)return;sync(true);
+  try{if(pendingDelType==='exp'){await dbDE(pendingDel);expenses=expenses.filter(e=>e.id!==pendingDel);}else{await dbDI(pendingDel);incomes=incomes.filter(i=>i.id!==pendingDel);}if(editId===pendingDel)cancelEdit();cacheData();render();renderGelir();showToast('Silindi.','info');if(navigator.vibrate)navigator.vibrate([30,20,30]);}
+  catch(err){showToast('Silinemedi.','error');}
+  closeModal('delModal');pendingDel=null;pendingDelType=null;sync(false);
 }
 
 
