@@ -500,7 +500,6 @@ select option{background:#1a1829;}
     <!-- SEKMELİ YAPI -->
     <div class="tab-row" id="settingsTabRow" style="margin-bottom:16px">
       <button class="tab-btn active" onclick="setSettingsTab('planlama')">📋 Planlama</button>
-      <button class="tab-btn" onclick="setSettingsTab('guvenlik')">🔒 Güvenlik</button>
       <button class="tab-btn" onclick="setSettingsTab('veri')">📤 Veri</button>
     </div>
 
@@ -570,27 +569,7 @@ select option{background:#1a1829;}
       </div>
     </div>
 
-    <!-- GÜVENLİK SEKMESİ -->
-    <div id="sTab-guvenlik" style="display:none">
-      <div style="border-radius:16px;background:var(--card);border:1px solid var(--border);overflow:hidden;margin-bottom:10px">
-        <div onclick="openCredModal()" style="display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.05)">
-          <div style="width:40px;height:40px;border-radius:11px;background:rgba(245,166,35,0.1);display:flex;align-items:center;justify-content:center;font-size:18px">🔐</div>
-          <div style="flex:1">
-            <div style="font-size:14px;font-weight:500;color:var(--text)">Şifre Değiştir</div>
-            <div style="font-size:11px;color:var(--muted);margin-top:2px" id="credSettingSub">Kullanıcı adı ve şifrenizi güncelleyin</div>
-          </div>
-          <div style="color:var(--muted)">›</div>
-        </div>
-        <div onclick="doLogout()" style="display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer">
-          <div style="width:40px;height:40px;border-radius:11px;background:rgba(224,92,122,0.1);display:flex;align-items:center;justify-content:center;font-size:18px">🚪</div>
-          <div style="flex:1">
-            <div style="font-size:14px;font-weight:500;color:#e05c7a">Çıkış Yap</div>
-            <div style="font-size:11px;color:var(--muted);margin-top:2px">Oturumu kapat</div>
-          </div>
-          <div style="color:var(--muted)">›</div>
-        </div>
-      </div>
-    </div>
+    <!-- GÜVENLİK SEKMESİ KALDIRILDI: giriş ekranı artık yok -->
 
     <!-- VERİ SEKMESİ -->
     <div id="sTab-veri" style="display:none">
@@ -1097,16 +1076,18 @@ async function startApp(){
   checkRecur();
 }
 function init(){
-  checkLogin();
+  const pl=document.getElementById('pageLogin');if(pl)pl.classList.remove('active');
+  const loader=document.getElementById('loader');if(loader)loader.style.display='none';
+  startApp();
 }
 // NAV
 function setSettingsTab(tab){
-  ['planlama','guvenlik','veri'].forEach(t=>{
+  ['planlama','veri'].forEach(t=>{
     const el=document.getElementById('sTab-'+t);
     if(el)el.style.display=t===tab?'block':'none';
   });
   document.querySelectorAll('#settingsTabRow .tab-btn').forEach((b,i)=>{
-    b.classList.toggle('active',['planlama','guvenlik','veri'][i]===tab);
+    b.classList.toggle('active',['planlama','veri'][i]===tab);
   });
   if(tab==='planlama'){renderGoals();renderDebts();renderRecurs();renderCatBudgets();renderDayOfWeek();}
 }
